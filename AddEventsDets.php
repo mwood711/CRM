@@ -1,11 +1,12 @@
 <?php
-$f_id = $_POST['f_id'];
-$fname = $_POST['fname'];
-$lname = $_POST['lname'];
-$email = $_POST['email'];
-$phone = $_POST['phone'];
-$address = $_POST['address'];
-if ( !empty($f_id) || !empty($fname) || !empty($lname) || !empty($email) || !empty($phone) || !empty($address)) {
+$e_type = $_POST['e_type'];
+$notes = $_POST['notes'];
+$f_attending = $_POST['f_attending'];
+$dates = $_POST['dates'];
+$place = $_POST['place'];
+$amount = $_POST['amount'];
+$c_id = $_POST['c_id'];
+if ( !empty($e_type) || !empty($notes) || !empty($f_attending) || !empty($dates) || !empty($place) || !empty($amount) || !empty($c_id)) {
     $serverName = "localhost\\SQLEXPRESS";
  //creating a connection to the SQL database
     $connectionInfo = array( "Database"=>"ksu_crm");
@@ -20,7 +21,7 @@ if ( !empty($f_id) || !empty($fname) || !empty($lname) || !empty($email) || !emp
     } 
 //Insert data into the database
     {
-     $INSERT = "INSERT Into faculty (f_id, fname, lname, email, phone, address) VALUES('$f_id', '$fname', '$lname', '$email', '$phone', '$address')";
+     $INSERT = "INSERT Into eventdetails (e_type, notes, f_attending, dates, place, amount, c_id) VALUES('$e_type', '$notes', '$f_attending', '$dates', '$place', '$amount', 'c_id')";
 //Prepare statement
       $stmt = sqlsrv_prepare($conn, $INSERT);
       sqlsrv_execute($stmt);
