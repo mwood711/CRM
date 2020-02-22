@@ -424,38 +424,38 @@
 <div class="modal-body">
 <div class="row">
 <div class="col-md-12">
-<form class="form-horizontal" action="AddEventsDets.php" method="POST">
+<form class="form-horizontal" action="addeventsdets.php" method="POST">
 <div class="row">
 <!-- Text input-->
 <div class="col-md-6 form-group">
 <label>Event Type ID</label>
-<input type="number" class="form-control" name="e_type" placeholder="Enter Event ID" required>
+<input type="number" class="form-control" name="e_type" placeholder="Enter Event ID" >
 </div>
 <div class="col-md-6 form-group">
 <label>Enter Notes From Events</label>
-<input type="text" class="form-control" name="notes" placeholder="Enter notes from event" required>
+<textarea type="text" class="form-control" name="notes" placeholder="Enter notes from event" ></textarea>
 </div>
 <!-- Text input-->
 <div class="col-md-6 form-group">
 <label>Faculty who attended</label>
-<input type="number" class="form-control" name="f_attending" placeholder="Enter Faculty ID" required>
+<input type="number" class="form-control" name="f_attending" placeholder="Enter Faculty ID" >
 </div>
 <!-- Text input-->
 <div class="col-md-6 form-group">
 <label>Date</label>
-<input type="date" class="form-control" name="dates" placeholder="Enter Event date " required>
+<input type="date" class="form-control" name="dates" placeholder="Enter Event date " >
 </div>
 <div class="col-md-6 form-group">
 <label>Event Location</label>
-<input type="text" class="form-control" name="place" placeholder="Enter Event Location" required>
+<input type="text" class="form-control" name="place" placeholder="Enter Event Location" >
 </div>
 <div class="col-md-6 form-group">
 <label>Amount Pledge (If Any)</label>
-<input type="text" class="form-control" name="amount" placeholder="Enter amount pledge at event by Client" required>
+<input type="number" class="form-control" name="amount" placeholder="Enter amount pledge at event by Client" >
 </div>
 <div class="col-md-6 form-group">
 <label>Contact ID</label>
-<input type="number" class="form-control" name="c_id" placeholder="Enter Id of Client who attended" required>
+<input type="number" class="form-control" name="c_id" placeholder="Enter Id of Client who attended" >
 </div>
 <div class="col-md-12 form-group user-form-group">
 <div class="float-right">

@@ -26,7 +26,6 @@ if ( !empty($evt_name) || !empty($evi_idd)) {
 
     }
  else {
- echo "All field are required";
  die();
 }
 ?>
