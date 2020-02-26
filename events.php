@@ -356,8 +356,16 @@
 <input type="text" class="form-control" name="evt_name" placeholder="Enter Event Name" required>
 </div>
 <div class="col-md-6 form-group">
-<label>Event Identifier ID</label>
-<input type="number" class="form-control" name="evi_idd" placeholder="Enter Identifier ID" required>
+  <div class="input-group">
+<label for="inputGroupSelect">Event Identifier ID</label>
+  </div>
+  <select class="custom-select" name="evi_idd" id="inputGroupSelect">
+    <option selected>Select Event ID</option>
+    <option value="1">One</option>
+    <option value="2">Two</option>
+    <option value="3">Three</option>
+  </select>
+<!-- <input type="number" class="form-control" name="evi_idd" placeholder="Enter Identifier ID" required> -->
 </div>
 <div class="col-md-12 form-group user-form-group">
 <div class="float-right">
