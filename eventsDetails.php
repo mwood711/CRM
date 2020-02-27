@@ -47,7 +47,7 @@
 <!-- Site wrapper -->
 <div class="wrapper">
 <header class="main-header">
-<a href="index.html" class="logo">
+<a href="index.php" class="logo">
 <!-- Logo -->
 <span class="logo-mini">
 <img src="assets/dist/img/mini-logo.png" alt="">
@@ -99,7 +99,7 @@
 <!-- sidebar menu -->
 <ul class="sidebar-menu">
 <li>
-<a href="index.html"><i class="fa fa-tachometer"></i><span>Dashboard</span>
+<a href="index.php"><i class="fa fa-tachometer"></i><span>Dashboard</span>
 <span class="pull-right-container">
 </span>
 </a>
@@ -153,13 +153,13 @@
 <small>Show Clients and Event details</small>
 </div>
 </section>
-<!-- Main content -->
+
+<!--============================================-->
 <section class="content">
-<div class="col-sm-12 col-lg-4 col-md-12 col-12">
-<div class="card">
-<div class="card-body">
-<ul class="list-group">
-<li class="list-group-item list-group-item-success" style="font-weight: 700">
+  <!-- Main content -->
+<!-- Even Profile -->
+<div style="padding-bottom: 30px;">
+<li class="list-group-item list-group-item-primary" style="font-size: 100%; 700">
 
         <?php
         $serverName = "localhost\\SQLEXPRESS";
@@ -169,41 +169,37 @@
         if( $conn === false ) {
         die( print_r( sqlsrv_errors(), true));
         }  
-        $sql = "select CONCAT (fname,' ',lname) AS name, cname, title, officephone, email 
-        from contact, company
-        WHERE company.company_id = contact.company 
-        and contact.c_id = '$urlvariable'";
+        $sql = "select evt_name, place, date from contact, eventtype, eventdetails
+        where eventdetails.c_id = contact.c_id
+        and eventtype.evt_id = eventdetails.e_type 
+        and evt_id ='$urlvariable'
+        group by evt_name, place, date";
         $stmt = sqlsrv_query( $conn, $sql );
         if( $stmt === false) {
         die( print_r( sqlsrv_errors(), true) );
         }
 
         while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+        $date = $row['date'];
+        $stringdate = $date->format('Y-m-d');
         echo "<table>";
         echo "
-        <tr><td><b>Client Name :</b></td><td>".$row['name']."</td></tr>
-        <tr><td><b>Company :</b></td><td>".$row['cname']."</td></tr>
-        <tr><td><b>Client Role :</b></td><td>".$row['title']."</td></tr>
-        <tr><td><b>Office Phone :</b></td><td>".$row['officephone']."</td></tr>
-        <tr><td><b>Email :</b></td><td>".$row['email']."</td></tr>
+        <tr><td>".$row['evt_name']."</td></tr>
+        <tr><td>".$row['place']."</td></tr>
+        <tr><td>".$stringdate."</td></tr>
         ";
         echo "</table>";
         }
         sqlsrv_free_stmt( $stmt);
         ?>
 </li>
-</ul>
 </div>
-</div> 
-</section>
-<section class="content">
 <div class="row">
 <div class="col-lg-6 pinpin">
 <div class="card lobicard"  data-sortable="true">
 <div class="card-header lobicard-custom-control">
 <div class="btn-group d-flex" role="group">
 </div> 
-<!--============================================-->
 <div class="card-title custom_title">
 <h4>Client Attendees</h4>
 </div>
@@ -298,6 +294,56 @@
           ?>
 </tbody>
 </table>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="content">
+<div class="row">
+<div class="col-lg-12 pinpin">
+<div class="card lobicard"  data-sortable="true">
+<div class="card-header lobicard-custom-control">
+<div class="card-title custom_title">
+<h4>Notes</h4>
+</div>
+</div>
+<div class="card-body">
+<div class="table-responsive">
+<table class="table table-bordered table-hover">
+<thead class="back_table_color">
+<tr class="info">
+<th>Date</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+          <?php
+          $serverName = "localhost\\SQLEXPRESS";
+          $connectionInfo = array( "Database"=>"ksu_crm");
+          $urlvariable = $_GET['evt'];
+          $conn = sqlsrv_connect( $serverName, $connectionInfo );
+          if( $conn === false ) {
+          die( print_r( sqlsrv_errors(), true));
+          }
+
+          $sql = "select date, notes from eventdetails, eventtype where eventdetails.e_type = eventtype.evt_id and e_type = '$urlvariable'";
+          $stmt = sqlsrv_query( $conn, $sql );
+          if( $stmt === false) {
+          die( print_r( sqlsrv_errors(), true) );
+          }
+
+          while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+          $date = $row['date'];
+          $stringdate = $date->format('Y-m-d');
+          echo "<tr><td>".$stringdate."</td><td>".$row['notes']."</td></tr>" ;
+
+          }
+          sqlsrv_free_stmt( $stmt);
+          ?>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 </div>

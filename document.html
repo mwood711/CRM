@@ -48,7 +48,7 @@
 <!-- Site wrapper -->
 <div class="wrapper">
 <header class="main-header">
-<a href="index.html" class="logo">
+<a href="index.php" class="logo">
 <!-- Logo -->
 <span class="logo-mini">
 <img src="assets/dist/img/mini-logo.png" alt="">
@@ -114,7 +114,7 @@
 <!-- sidebar menu -->
 <ul class="sidebar-menu">
 <li>
-<a href="index.html"><i class="fa fa-tachometer"></i><span>Dashboard</span>
+<a href="index.php"><i class="fa fa-tachometer"></i><span>Dashboard</span>
 <span class="pull-right-container">
 </span>
 </a>
@@ -305,18 +305,22 @@
 <div class="row">
 <!-- Text input-->
 <div class="col-md-6 form-group">
-<label class="control-label">Type</label>
-<input type="text" placeholder="Type" class="form-control">
+<label class="control-label">File name</label>
+<input  type="text" class="form-control" name="filename" placeholder="Enter File Name" required>
 </div>
 <!-- Text input-->
 <div class="col-md-6 form-group">
-<label class="control-label">Title</label>
-<input type="text" placeholder="Title" class="form-control">
+<label class="control-label">Contact ID</label>
+<input  type="number" class="form-control" name="c_id" placeholder="Enter contact ID" required>
+</div>
+<div class="col-md-6 form-group">
+<label class="control-label">Choose File</label>
+<input  type="file" name="file" placeholder="Select file" required>
 </div>
 <div class="col-md-12 form-group user-form-group">
 <div class="float-right">
 <button type="button" class="btn btn-danger btn-sm">Cancel</button>
-<button type="submit" class="btn btn-add btn-sm">Save</button>
+<button type="submit" class="btn btn-add btn-sm" name="submit" value="Add">Save</button>
 </div>
 </div>
 </div>

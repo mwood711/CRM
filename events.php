@@ -48,7 +48,7 @@
 <!-- Site wrapper -->
 <div class="wrapper">
 <header class="main-header">
-<a href="index.html" class="logo">
+<a href="index.php" class="logo">
 <!-- Logo -->
 <span class="logo-mini">
 <img src="assets/dist/img/mini-logo.png" alt="">
@@ -115,7 +115,7 @@
 <!-- sidebar menu -->
 <ul class="sidebar-menu">
 <li>
-<a href="index.html"><i class="fa fa-tachometer"></i><span>Dashboard</span>
+<a href="index.php"><i class="fa fa-tachometer"></i><span>Dashboard</span>
 <span class="pull-right-container">
 </span>
 </a>
@@ -219,7 +219,7 @@
 
             while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
             echo 
-            "<tr onclick=\"window.location='eventsDetails.php?evt=".$row["evt_id"]."'\">
+            "<tr>
             <td>".$row['evt_id']."</td>
             <td>".$row['evt_name']."</td>
             <td>".$row['evi_name']."</td>
@@ -304,7 +304,6 @@
 <tr class="info">
 <th>Events ID</th>
 <th>Events Name</th>
-<th>Notes</th>
 <th>Location</th>
 <th>Dates</th>
 </tr>
@@ -318,15 +317,20 @@
         die( print_r( sqlsrv_errors(), true));
         }
 
-        $sql = "SELECT evt_id, evt_name, notes, place ,dates FROM eventdetails, eventtype WHERE eventtype.evt_id = eventdetails.e_type group by evt_id,evt_name,notes,place,dates";
+        $sql = "SELECT distinct evt_id, evt_name, place ,date FROM eventdetails, eventtype WHERE eventtype.evt_id = eventdetails.e_type group by evt_id,evt_name,notes,place,date";
         $stmt = sqlsrv_query( $conn, $sql );
         if( $stmt === false) {
         die( print_r( sqlsrv_errors(), true) );
         }
         while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
-        $date = $row['dates'];
+        $date = $row['date'];
         $stringdate = $date->format('Y-m-d');
-        echo "<tr><td>".$row['evt_id']."</td><td>".$row['evt_name']."</td><td>".$row['notes']."</td><td>".$row['place']."</td><td>".$stringdate."</td></tr>" ;
+        echo "
+        <tr onclick=\"window.location='eventsDetails.php?evt=".$row["evt_id"]."'\">
+        <td>".$row['evt_id']."</td>
+        <td>".$row['evt_name']."</td>
+        <td>".$row['place']."</td>
+        <td>".$stringdate."</td></tr>" ;
 
         }
         sqlsrv_free_stmt( $stmt);
@@ -361,11 +365,19 @@
   </div>
   <select class="custom-select" name="evi_idd" id="inputGroupSelect">
     <option selected>Select Event ID</option>
-    <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option>
+    <option value="1">Project</option>
+    <option value="2">Meeting</option>
+    <option value="3">Gift</option>
+    <option value="9">Event</option>
   </select>
-<!-- <input type="number" class="form-control" name="evi_idd" placeholder="Enter Identifier ID" required> -->
+</div>
+<div class="col-md-6 form-group">
+<label>Event Date</label>
+<input type="date" class="form-control" name="date" placeholder="Enter Event date" required>
+</div>
+<div class="col-md-6 form-group">
+<label>Event Time</label>
+<input type="time" class="form-control" name="time" placeholder="Enter Event time" required>
 </div>
 <div class="col-md-12 form-group user-form-group">
 <div class="float-right">
@@ -449,10 +461,6 @@
 <input type="number" class="form-control" name="f_attending" placeholder="Enter Faculty ID" >
 </div>
 <!-- Text input-->
-<div class="col-md-6 form-group">
-<label>Date</label>
-<input type="date" class="form-control" name="dates" placeholder="Enter Event date " >
-</div>
 <div class="col-md-6 form-group">
 <label>Event Location</label>
 <input type="text" class="form-control" name="place" placeholder="Enter Event Location" >

@@ -47,7 +47,7 @@
 <!-- Site wrapper -->
 <div class="wrapper">
 <header class="main-header">
-<a href="index.html" class="logo">
+<a href="index.php" class="logo">
 <!-- Logo -->
 <span class="logo-mini">
 <img src="assets/dist/img/mini-logo.png" alt="">
@@ -99,7 +99,7 @@
 <!-- sidebar menu -->
 <ul class="sidebar-menu">
 <li>
-<a href="index.html"><i class="fa fa-tachometer"></i><span>Dashboard</span>
+<a href="index.php"><i class="fa fa-tachometer"></i><span>Dashboard</span>
 <span class="pull-right-container">
 </span>
 </a>
