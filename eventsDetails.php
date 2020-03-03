@@ -112,7 +112,7 @@
 </span>
 </a>
 <ul class="treeview-menu">
-<li><a href="addclient.html">Add New Client</a></li>
+<li><a href="addclient.php">Add New Client</a></li>
 <li class="active"><a href="clientlist.php">List</a></li>
 <!-- <li><a href="group.html">Groups</a></li> -->
 </ul>

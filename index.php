@@ -135,7 +135,7 @@
 </span>
 </a>
 <ul class="treeview-menu">
-<li><a href="addclient.html">Add New Client</a></li>
+<li><a href="addclient.php">Add New Client</a></li>
 <li><a href="clientlist.php">Client List</a></li>
 <!-- <li><a href="group.html">Groups</a></li> -->
 </ul>
@@ -188,12 +188,7 @@
 <div class="counter-number pull-right">
 <span class="count-number">
         <?php
-        $serverName = "localhost\\SQLEXPRESS";
-        $connectionInfo = array( "Database"=>"ksu_crm");
-        $conn = sqlsrv_connect( $serverName, $connectionInfo );
-        if( $conn === false ) {
-        die( print_r( sqlsrv_errors(), true));
-        } 
+        require('dbconfig.php');
         $sql = "select count(c_id) as contacts from contact";
         $stmt = sqlsrv_query( $conn, $sql );
         if( $stmt === false) {
@@ -220,12 +215,7 @@
 <div class="counter-number pull-right">
 <span class="count-number">
 	 <?php
-        $serverName = "localhost\\SQLEXPRESS";
-        $connectionInfo = array( "Database"=>"ksu_crm");
-        $conn = sqlsrv_connect( $serverName, $connectionInfo );
-        if( $conn === false ) {
-        die( print_r( sqlsrv_errors(), true));
-        }  
+        require('dbconfig.php');
         $sql = "select count(f_id) as no_fac from faculty";
         $stmt = sqlsrv_query( $conn, $sql );
         if( $stmt === false) {
@@ -252,12 +242,7 @@
 <div class="counter-number pull-right">
 <i class="fa fa-files"></i><span class="count-number">
          <?php
-        $serverName = "localhost\\SQLEXPRESS";
-        $connectionInfo = array( "Database"=>"ksu_crm");
-        $conn = sqlsrv_connect( $serverName, $connectionInfo );
-        if( $conn === false ) {
-        die( print_r( sqlsrv_errors(), true));
-        }  
+        require('dbconfig.php');
         $sql = "select count(evt_id) As upcoming from eventtype WHERE date >= getdate() ";
         $stmt = sqlsrv_query( $conn, $sql );
         if( $stmt === false) {
@@ -284,12 +269,7 @@
 <div class="counter-number pull-right">
 <span class="count-number">
  <?php
-        $serverName = "localhost\\SQLEXPRESS";
-        $connectionInfo = array( "Database"=>"ksu_crm");
-        $conn = sqlsrv_connect( $serverName, $connectionInfo );
-        if( $conn === false ) {
-        die( print_r( sqlsrv_errors(), true));
-        }  
+        require('dbconfig.php');  
         $sql = "select count(evt_id) As passed from eventtype";
         $stmt = sqlsrv_query( $conn, $sql );
         if( $stmt === false) {
@@ -309,8 +289,9 @@
 </div>
 </div>
 </div>
-</div>
 
+</div>
+<!-- Main Content-->
 <!-- Where to change information on the main page while keeping important stuff-->
 
 <!-- /.content-wrapper -->

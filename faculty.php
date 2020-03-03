@@ -128,7 +128,7 @@
 </span>
 </a>
 <ul class="treeview-menu">
-<li><a href="addclient.html">Add New Client</a></li>
+<li><a href="addclient.php">Add New Client</a></li>
 <li><a href="clientlist.php">Client List</a></li>
 <!-- <li><a href="group.html">Groups</a></li> -->
 </ul>
@@ -249,11 +249,13 @@
 <table id="dataTableExample1" class="table table-bordered table-striped table-hover">
 <thead class="back_table_color">
 <tr class="info">
+<th>Faculty ID</th>
 <th>First Name</th>
 <th>Last Name</th>
 <th>Email</th>
 <th>Phone</th>
 <th>Address</th>
+<th>Action</th>
 </tr>
 </thead>
 <tbody>
@@ -265,15 +267,22 @@
         die( print_r( sqlsrv_errors(), true));
         }
 
-        $sql = "SELECT firstname, lastname, email, phone, address FROM faculty ";
+        $sql = "SELECT f_id, firstname, lastname, email, phone, address FROM faculty ";
         $stmt = sqlsrv_query( $conn, $sql );
         if( $stmt === false) {
         die( print_r( sqlsrv_errors(), true) );
         }
 
         while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
-        echo "<tr><td>".$row['firstname']."</td><td>".$row['lastname']."</td><td>".$row['email']."</td><td>".$row['phone']."</td><td>".$row['address']."</td></tr>" ;
-
+        echo "<tr>
+                <td>".$row['f_id']."</td>
+                <td>".$row['firstname']."</td>
+                <td>".$row['lastname']."</td>
+                <td>".$row['email']."</td>
+                <td>".$row['phone']."</td>
+                <td>".$row['address']."</td>
+                <td><a href=\"deletefaculty.php?f_id=".$row['f_id']."\" style='color:red'>Delete</a></td>
+                </tr>" ;
         }
         sqlsrv_free_stmt( $stmt);
         ?>
@@ -299,10 +308,10 @@
 <form class="form-horizontal" action="faculty_insert.php" method="POST">
 <div class="row">
 <!-- Text input-->
-<div class="col-md-6 form-group">
+<!-- <div class="col-md-6 form-group">
 <label>Faculty ID</label>
 <input type="number" class="form-control" name="f_id" placeholder="Enter Faculty ID" required>
-</div>
+</div> -->
 <div class="col-md-6 form-group">
 <label>First Name</label>
 <input type="text" class="form-control" name="firstname" placeholder="Enter First Name" required>

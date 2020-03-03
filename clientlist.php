@@ -48,7 +48,7 @@
    <!-- Site wrapper -->
    <div class="wrapper">
    <header class="main-header">
-   <a href="index.html" class="logo">
+   <a href="index.php" class="logo">
    <!-- Logo -->
    <span class="logo-mini">
    <img src="assets/dist/img/mini-logo.png" alt="">
@@ -115,7 +115,7 @@
    <!-- sidebar menu -->
    <ul class="sidebar-menu">
    <li>
-   <a href="index.html"><i class="fa fa-tachometer"></i><span>Dashboard</span>
+   <a href="index.php"><i class="fa fa-tachometer"></i><span>Dashboard</span>
    <span class="pull-right-container">
    </span>
    </a>
@@ -128,7 +128,7 @@
    </span>
    </a>
    <ul class="treeview-menu">
-   <li><a href="addclient.html">Add New Client</a></li>
+   <li><a href="addclient.php">Add New Client</a></li>
    <li class="active"><a href="clientlist.php">Client List</a></li>
    <!-- <li><a href="group.html">Groups</a></li> -->
    </ul>
@@ -185,7 +185,7 @@
    <!-- Plugin content:powerpoint,txt,pdf,png,word,xl -->
    <div class="btn-group d-flex" role="group">
    <div class="buttonexport" id="buttonlist"> 
-   <a class="btn btn-add" href="addclient.html"> <i class="fa fa-plus"></i> Add Client
+   <a class="btn btn-add" href="addclient.php"> <i class="fa fa-plus"></i> Add Client
    </a>  
    </div>
    </div> 
@@ -256,40 +256,31 @@
    <th>Child info</th>
    <th>Company Name</th>
    <th>Office Phone</th>
-   <th>Action</th>
+   <th>Delete</th>
    </tr>
    </thead>
    <tbody>
    <?php
-   $serverName = "localhost\\SQLEXPRESS";
-   $connectionInfo = array( "Database"=>"ksu_crm");
-   $conn = sqlsrv_connect( $serverName, $connectionInfo );
-   if( $conn === false ) {
-   die( print_r( sqlsrv_errors(), true));
-   }
-
-   $sql = "SELECT c_id, fname, lname, title, sname, cinfo, cname, officephone FROM contact,company  WHERE company.company_id = contact.company";
-   $stmt = sqlsrv_query( $conn, $sql );
-   if( $stmt === false) {
-   die( print_r( sqlsrv_errors(), true) );
-   }
-
-   while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
-   echo "<tr  onclick=\"window.location='ClientDetails.php?custid=".$row["c_id"]."'\">
-   <td>".$row['c_id']."</td>
-   <td>".$row['fname']."</td>
-   <td>".$row['lname']."</td>
-   <td>".$row['title']."</td>
-   <td>".$row['sname']."</td>
-   <td>".$row['cinfo']."</td>
-   <td>".$row['cname']."</td>
-   <td>".$row['officephone']."</td>
-   <td><a href=\"editclient.php?c_id=".$row["c_id"]."\" style=\"text-decoration: none\">Edit</a></td>  
-   </tr>" ;
-
-   }
-
-   sqlsrv_free_stmt( $stmt);
+         require('dbconfig.php');
+         $sql = "SELECT c_id, fname, lname, title, sname, cinfo, cname, officephone FROM contact,company  WHERE company.company_id = contact.company";
+         $stmt = sqlsrv_query( $conn, $sql );
+         if( $stmt === false) {
+         die( print_r( sqlsrv_errors(), true) );
+         }
+         while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+         echo "<tr  onclick=\"window.location='ClientDetails.php?custid=".$row["c_id"]."'\">
+         <td>".$row['c_id']."</td>
+         <td>".$row['fname']."</td>
+         <td>".$row['lname']."</td>
+         <td>".$row['title']."</td>
+         <td>".$row['sname']."</td>
+         <td>".$row['cinfo']."</td>
+         <td>".$row['cname']."</td>
+         <td>".$row['officephone']."</td>
+         <td><a href=\"deleteclient.php?c_id=".$row['c_id']."\" style='color:red'>Delete</a></td>
+         </tr>";
+         }
+         sqlsrv_free_stmt( $stmt);
    ?>
    </tbody>
    </table>

@@ -128,7 +128,7 @@
 </span>
 </a>
 <ul class="treeview-menu">
-<li><a href="addclient.html">Add New Client</a></li>
+<li><a href="addclient.php">Add New Client</a></li>
 <li><a href="clientlist.php">Client List</a></li>
 <!-- <li><a href="group.html">Groups</a></li> -->
 </ul>
@@ -200,29 +200,24 @@
 <th>Event ID</th>
 <th>Event Name</th>
 <th>Event Type</th>
+<th>Action</th>
 </tr>
 </thead>
 <tbody>
             <?php
-            $serverName = "localhost\\SQLEXPRESS";
-            $connectionInfo = array( "Database"=>"ksu_crm");
-            $conn = sqlsrv_connect( $serverName, $connectionInfo );
-            if( $conn === false ) {
-            die( print_r( sqlsrv_errors(), true));
-            }
-
+            require('dbconfig.php');
             $sql = "Select evt_id, evt_name,evi_name  FROM eventtype,eventidentifier where eventtype.evi_idd = eventidentifier.evi_id ";
             $stmt = sqlsrv_query( $conn, $sql );
             if( $stmt === false) {
             die( print_r( sqlsrv_errors(), true) );
             }
-
             while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
             echo 
             "<tr>
             <td>".$row['evt_id']."</td>
             <td>".$row['evt_name']."</td>
             <td>".$row['evi_name']."</td>
+            <td><a href=\"delete_eventtype.php?evt_id=".$row['evt_id']."\" style='color:red'>Delete</a></td>
             </tr>" ; 
             }
             sqlsrv_free_stmt( $stmt);
@@ -254,26 +249,22 @@
 <tr class="info">
 <th>Event Identifier ID</th>
 <th>Event Identifier Name</th>
+<th>Action</th>
 </tr>
 </thead>
 <tbody>
           <?php
-          $serverName = "localhost\\SQLEXPRESS";
-          $connectionInfo = array( "Database"=>"ksu_crm");
-          $conn = sqlsrv_connect( $serverName, $connectionInfo );
-          if( $conn === false ) {
-          die( print_r( sqlsrv_errors(), true));
-          }
-
+          require('dbconfig.php');
           $sql = "SELECT evi_id, evi_name FROM eventidentifier ";
           $stmt = sqlsrv_query( $conn, $sql );
           if( $stmt === false) {
           die( print_r( sqlsrv_errors(), true) );
           }
-
           while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
-          echo "<tr><td>".$row['evi_id']."</td><td>".$row['evi_name']."</td></tr>" ;
-
+          echo "<tr>
+          <td>".$row['evi_id']."</td><td>".$row['evi_name']."</td>
+          <td><a href=\"delete_eventtype.php?evi_id=".$row['evi_id']."\" style='color:red'>Delete</a></td>
+          </tr>" ;
           }
           sqlsrv_free_stmt( $stmt);
           ?>
@@ -310,13 +301,7 @@
 </thead>
 <tbody>
         <?php
-        $serverName = "localhost\\SQLEXPRESS";
-        $connectionInfo = array( "Database"=>"ksu_crm");
-        $conn = sqlsrv_connect( $serverName, $connectionInfo );
-        if( $conn === false ) {
-        die( print_r( sqlsrv_errors(), true));
-        }
-
+        require('dbconfig.php');
         $sql = "SELECT distinct evt_id, evt_name, place ,date FROM eventdetails, eventtype WHERE eventtype.evt_id = eventdetails.e_type group by evt_id,evt_name,notes,place,date";
         $stmt = sqlsrv_query( $conn, $sql );
         if( $stmt === false) {
@@ -331,7 +316,6 @@
         <td>".$row['evt_name']."</td>
         <td>".$row['place']."</td>
         <td>".$stringdate."</td></tr>" ;
-
         }
         sqlsrv_free_stmt( $stmt);
         ?>
@@ -363,12 +347,16 @@
   <div class="input-group">
 <label for="inputGroupSelect">Event Identifier ID</label>
   </div>
-  <select class="custom-select" name="evi_idd" id="inputGroupSelect">
-    <option selected>Select Event ID</option>
-    <option value="1">Project</option>
-    <option value="2">Meeting</option>
-    <option value="3">Gift</option>
-    <option value="9">Event</option>
+  <select class="form-control" name="evi_idd" id="inputGroupSelect">
+    <option selected>--Select Event ID--</option>
+     <?php
+          require('dbconfig.php');
+          $sql = "SELECT * FROM eventidentifier"; 
+          $stmt = sqlsrv_query($conn, $sql );
+          while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ){
+          echo "<option value='".$row['evi_id']."'>".$row['evi_name']."</option>";
+          }
+      ?>
   </select>
 </div>
 <div class="col-md-6 form-group">
@@ -448,8 +436,18 @@
 <div class="row">
 <!-- Text input-->
 <div class="col-md-6 form-group">
-<label>Event Type ID</label>
-<input type="number" class="form-control" name="e_type" placeholder="Enter Event ID" >
+<label>Event Type </label>
+<select class="form-control" name="e_type" id="inputGroupSelect">
+    <option selected>--Select Event type--</option>
+     <?php
+          require('dbconfig.php');
+          $sql = "SELECT * FROM eventtype"; 
+          $stmt = sqlsrv_query($conn, $sql );
+          while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ){
+          echo "<option value='".$row['evt_id']."'>".$row['evt_name']."</option>";
+          }
+      ?>
+  </select>
 </div>
 <div class="col-md-6 form-group">
 <label>Enter Notes From Events</label>
@@ -458,7 +456,17 @@
 <!-- Text input-->
 <div class="col-md-6 form-group">
 <label>Faculty who attended</label>
-<input type="number" class="form-control" name="f_attending" placeholder="Enter Faculty ID" >
+<select class="form-control" name="f_attending" id="inputGroupSelect">
+    <option selected>--Select Faculty--</option>
+     <?php
+          require('dbconfig.php');
+          $sql = "SELECT * FROM faculty"; 
+          $stmt = sqlsrv_query($conn, $sql );
+          while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ){
+          echo "<option value='".$row['f_id']."'>".$row['firstname']. " ".$row['lastname']."</option>";
+          }
+      ?>
+  </select>
 </div>
 <!-- Text input-->
 <div class="col-md-6 form-group">
@@ -470,8 +478,18 @@
 <input type="number" class="form-control" name="amount" placeholder="Enter amount pledge at event by Client" >
 </div>
 <div class="col-md-6 form-group">
-<label>Contact ID</label>
-<input type="number" class="form-control" name="c_id" placeholder="Enter Id of Client who attended" >
+<label>Contact Attending</label>
+<select class="form-control" name="c_id" id="inputGroupSelect">
+    <option selected>--Select Contact--</option>
+     <?php
+          require('dbconfig.php');
+          $sql = "SELECT * FROM contact"; 
+          $stmt = sqlsrv_query($conn, $sql );
+          while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ){
+          echo "<option value='".$row['c_id']."'>".$row['fname']. " ".$row['lname']."</option>";
+          }
+      ?>
+  </select>
 </div>
 <div class="col-md-12 form-group user-form-group">
 <div class="float-right">
