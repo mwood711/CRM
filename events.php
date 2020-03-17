@@ -148,7 +148,7 @@
 </a>
 </li>
 <li>
-<a href="document.html">
+<a href="document.php">
 <i class="fa fa-file-text"></i> <span>Documents</span>
 <span class="pull-right-container">
 </span>
@@ -263,7 +263,7 @@
           while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
           echo "<tr>
           <td>".$row['evi_id']."</td><td>".$row['evi_name']."</td>
-          <td><a href=\"delete_eventtype.php?evi_id=".$row['evi_id']."\" style='color:red'>Delete</a></td>
+          <td><a href=\"delete_eventid.php?evi_id=".$row['evi_id']."\" style='color:red'>Delete</a></td>
           </tr>" ;
           }
           sqlsrv_free_stmt( $stmt);
@@ -515,7 +515,7 @@
 </div>
 <!-- /.content-wrapper -->
 <footer class="main-footer">
-<strong>Copyright &copy; 2016-2017 <a href="#">thememinister</a>.</strong> All rights reserved.
+<strong>Copyright &copy; 2019-2020 <a href="#">CRM Tool</a>.</strong> All rights reserved.
 </footer>
 </div>
 <!-- ./wrapper -->

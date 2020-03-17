@@ -84,29 +84,36 @@
 <ul class="navbar-nav ml-auto">
 
 <!-- Help -->
-<li class="nav-item dropdown  dropdown-help">
-<a class="nav-link hidden_hidden" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-<i class="pe-7s-settings"></i></a>
 
-<div class="dropdown-menu drop_down">
-<div class="menus">
-<a class="dropdown-item" href="#"> <i class="fa fa-line-chart"></i> Networking</a>
-<a class="dropdown-item" href="#"><i class="fa fa fa-bullhorn"></i> Lan settings</a>
-<a class="dropdown-item" href="#"><i class="fa fa-bar-chart"></i> Settings</a>
-<a class="dropdown-item" href="#"><i class="fa fa-wifi"></i> wifi</a>
-</div>
-</div>
-</li>
 <!-- User -->
 <li class="nav-item dropdown dropdown-user">
 <a class="nav-link" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-<img src="assets/dist/img/avatar5.png" class="rounded-circle" width="50" height="50" alt="user"></a>
 
+        <?php
+        $urlvariable = $_GET['id']??'';
+        require ('dbconfig.php');
+        $sql = "select username
+        from logintable
+        Where username = '$urlvariable'";
+        $stmt = sqlsrv_query( $conn, $sql );
+        if( $stmt === false) {
+        die( print_r( sqlsrv_errors(), true) );
+        }
+
+        while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+        echo "<table>";
+        echo "
+        <tr><td>".$row['username']."</td></tr>
+        ";
+        echo "</table>";
+        }
+        sqlsrv_free_stmt( $stmt);
+        ?>
 <div class="dropdown-menu drop_down">
 <div class="menus">
 <a class="dropdown-item" href="#"><i class="fa fa-user"></i> User Profile</a>
 <a class="dropdown-item" href="#"><i class="fa fa-inbox"></i> Inbox</a>
-<a class="dropdown-item" href="#"><i class="fa fa-sign-out"></i> Signout</a>
+<a class="dropdown-item" href="login.html"><i class="fa fa-sign-out"></i> Signout</a>
 </div>
 </div>
 </li>
@@ -155,7 +162,7 @@
 </a>
 </li>
 <li>
-<a href="document.html">
+<a href="document.php">
 <i class="fa fa-file-text"></i> <span>Documents</span>
 <span class="pull-right-container">
 </span>
@@ -214,7 +221,7 @@
 <i class="fa fa-user-secret fa-3x"></i>
 <div class="counter-number pull-right">
 <span class="count-number">
-	 <?php
+        <?php
         require('dbconfig.php');
         $sql = "select count(f_id) as no_fac from faculty";
         $stmt = sqlsrv_query( $conn, $sql );
@@ -241,7 +248,7 @@
 <i class="fa fa-calendar fa-3x"></i>
 <div class="counter-number pull-right">
 <i class="fa fa-files"></i><span class="count-number">
-         <?php
+        <?php
         require('dbconfig.php');
         $sql = "select count(evt_id) As upcoming from eventtype WHERE date >= getdate() ";
         $stmt = sqlsrv_query( $conn, $sql );
@@ -268,9 +275,9 @@
 <i class="fa fa-files-o fa-3x"></i>
 <div class="counter-number pull-right">
 <span class="count-number">
- <?php
+        <?php
         require('dbconfig.php');  
-        $sql = "select count(evt_id) As passed from eventtype";
+        $sql = "select count(evt_id) As passed from eventtype ";
         $stmt = sqlsrv_query( $conn, $sql );
         if( $stmt === false) {
         die( print_r( sqlsrv_errors(), true) );
@@ -293,13 +300,71 @@
 </div>
 <!-- Main Content-->
 <!-- Where to change information on the main page while keeping important stuff-->
-
+<div class="row">
+<div class="col-lg-6 pinpin">
+<div class="card lobicard lobicard-custom-control"  data-sortable="true">
+<div class="card-header">
+<div class="card-title custom_title">
+<h4>upcoming Events</h4>
+</div>
+</div>
+<div class="card-body">
+<div class="Workslist">
+<div class="worklistdate">
+<table class="table table-hover">
+<thead class="border_border">
+<tr>
+<th>Event Name</th>
+<th>Events date</th>
+</tr>
+</thead>
+<tbody>
+        <?php
+        require('dbconfig.php');
+        $sql = "Select  evt_name, date  FROM eventtype WHERE date >= getdate() ";
+        $stmt = sqlsrv_query( $conn, $sql );
+        if( $stmt === false) {
+        die( print_r( sqlsrv_errors(), true) );
+        }
+        while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+         $date = $row['date'];
+        $stringdate = $date->format('m-d-y');
+        echo 
+        "<tr>
+        <td>".$row['evt_name']."</td>
+        <td>".$stringdate."</td>
+        </tr>" ; 
+        }
+        sqlsrv_free_stmt( $stmt);
+        ?>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-lg-6 pinpin">
+<div class="card lobicard lobicard-custom-control"  data-sortable="true">
+<div class="card-header">
+<div class="card-title custom_title">
+<h4>Chart Showing Percentage of Contacts at an event</h4>
+</div>
+</div>
+<div class="card-body">
+<div style="width:100%;">   
+<div id="chart" style="width: 100%; height: 400px;"></div>  
+</div>  
+</div>
+</div>
+</div>
 <!-- /.content-wrapper -->
+</div>
 </section>
 </div>
 <div>      
 <footer class="main-footer">
-<strong>Copyright &copy; 2016-2017 <a href="#">Thememinister</a>.</strong> All rights reserved.
+<strong>Copyright &copy; 2019-2020 <a href="#">CRM Tool</a>.</strong> All rights reserved.
 </footer>
 </div>
 <!-- /.wrapper -->
@@ -335,6 +400,7 @@
 <!-- Start Page Lavel Plugins
 =====================================================================-->
 <!-- ChartJs JavaScript -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="assets/plugins/chartJs/Chart.min.js" ></script>
 <!-- Counter js -->
 <script src="assets/plugins/counterup/waypoints.js" ></script>
@@ -350,86 +416,52 @@
 <!-- End Theme label Script
 =====================================================================-->
 
-<script>
-function dash() {
-// single bar chart
-var ctx = document.getElementById("singelBarChart");
-var myChart = new Chart(ctx, {
-type: 'bar',
-data: {
-labels: ["Sun", "Mon", "Tu", "Wed", "Th", "Fri", "Sat"],
-datasets: [
-{
-label: "My First dataset",
-data: [40, 55, 75, 81, 56, 55, 40],
-borderColor: "rgba(0, 150, 136, 0.8)",
-width: "1",
-borderWidth: "0",
-backgroundColor: "rgba(0, 150, 136, 0.8)"
-}
-]
-},
-options: {
-scales: {
-yAxes: [{
-ticks: {
-beginAtZero: true
-}
-}]
-}
-}
-});
-//monthly calender
-$('#m_calendar').monthly({
-mode: 'event',
-//jsonUrl: 'events.json',
-//dataType: 'json'
-xmlUrl: 'events.xml'
-});
+<!--=============Chart Script==========-->
+<script type="text/javascript"> 
+        <?php
+        require('dbconfig.php');
 
-//bar chart
-var ctx = document.getElementById("barChart");
-var myChart = new Chart(ctx, {
-type: 'bar',
-data: {
-labels: ["January", "February", "March", "April", "May", "June", "July", "august", "september","october", "Nobemver", "December"],
-datasets: [
-{
-label: "My First dataset",
-data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56],
-borderColor: "rgba(0, 150, 136, 0.8)",
-width: "1",
-borderWidth: "0",
-backgroundColor: "rgba(0, 150, 136, 0.8)"
+        $sql = "SELECT evt_name,count(contact.c_id) as contacts FROM eventtype,contact,eventdetails 
+        Where contact.c_id = eventdetails.c_id 
+        and eventtype.evt_id = eventdetails.e_type 
+        group by evt_name
+        ORDER BY evt_name";
+
+        $stmt = sqlsrv_query( $conn, $sql ); 
+        ?>
+google.charts.load('current', {'packages':['corechart']});  
+google.charts.setOnLoadCallback(drawChart);  
+function drawChart()  
+{  
+var data = google.visualization.arrayToDataTable([  
+['evt_name', 'contacts'], 
+
+        <?php  
+        while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) )  
+        {  
+        echo "['".$row["evt_name"]."', ".$row["contacts"]."],";  
+        }  
+        ?>  
+]);  
+var options = {  
+//title: 'Percentage of contacts and Events',
+bar: {groupWidth: "90%"},
+is3D: false,
+hAxis: {
+title: 'Events',
+viewWindow: {
+ min: [7, 30, 0],
+ max: [17, 30, 0]
+ }
 },
-{
-label: "My Second dataset",
-data: [28, 48, 40, 19, 86, 27, 90, 28, 48, 40, 19, 86],
-borderColor: "rgba(51, 51, 51, 0.55)",
-width: "1",
-borderWidth: "0",
-backgroundColor: "rgba(51, 51, 51, 0.55)"
-}
-]
-},
-options: {
-scales: {
-yAxes: [{
-ticks: {
-beginAtZero: true
-}
-}]
-}
-}
-});
-//counter
-$('.count-number').counterUp({
-delay: 10,
-time: 5000
-});
-}
-dash();         
-</script>
+ vAxis: {
+ title: 'Number of Clients'
+ }
+};  
+var chart = new google.visualization.PieChart(document.getElementById('chart'));  
+chart.draw(data, options);  
+}  
+</script>  
 </body>
 </html>
 

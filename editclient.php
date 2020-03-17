@@ -154,7 +154,7 @@
 </a>
 </li>
 <li>
-<a href="document.html">
+<a href="document.php">
 <i class="fa fa-file-text"></i> <span>Documents</span>
 <span class="pull-right-container">
 </span>
@@ -188,75 +188,71 @@
 <a class="btn btn-add" href="clientlist.php"><i class="fa fa-list"></i> client List </a>  
 </div>
 </div>
+
 <?php
-	$serverName = "localhost\\SQLEXPRESS";
-   $connectionInfo = array( "Database"=>"ksu_crm");
-    $urlvariable = $_GET['c_id'];
-   $conn = sqlsrv_connect( $serverName, $connectionInfo );
-   if( $conn === false ) {
-   die( print_r( sqlsrv_errors(), true));
-   }
+require ('dbconfig.php');
+$c_id=$_GET['c_id'];
+$sql = "SELECT  c_id, fname, lname, title, sname, cinfo, company, officephone, email, address, city, state, zipcode FROM contact  WHERE c_id = '$c_id'";
+$stmt = sqlsrv_query( $conn, $sql );
+$row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC)
+?>
 
-   $sql = "SELECT  fname, lname, title, sname, cname, officephone, email,address, city, state, zipcode FROM contact, company  WHERE company.company_id = contact.company and c_id = '$urlvariable'";
-   $stmt = sqlsrv_query( $conn, $sql );
-   if( $stmt === false) {
-   die( print_r( sqlsrv_errors(), true) );
-   }
-   while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) )
-
-   ?>
 <div class="card-body">
-<form class="col-sm-6" action="" method="POST">
+<form class="col-sm-6" action="clientEdit.php" method="POST">
+<div class="form-group">
+<label>contact ID</label>
+<input type="text" class="form-control" name="c_id"  value="<?php echo $row['c_id']; ?>" >
+</div>
 <div class="form-group">
 <label>First Name</label>
-<input type="text" class="form-control" value="" >
-</div>"
+<input type="text" class="form-control" name="fname"  value="<?php echo $row['fname']; ?>" >
+</div>
 <div class="form-group">
 <label>Last Name</label>
-</div><input type="text" class="form-control" name="<? echo ".$row['lname']." ?>" placeholder="Enter last Name" required>
-
+<input type="text" class="form-control" name="lname" value="<?php echo $row['lname']; ?>" >
+</div>
 <div class="form-group">
 <label>title</label>
-<input type="test" class="form-control" name="<? echo ".$row['title']." ?>" placeholder="Enter title" required>
+<input type="text" class="form-control" name="title" value="<?php echo $row['title']; ?>" >
 </div>
 <div class="form-group">
 <label>Spouse</label>
-<input type="text" class="form-control" name="<? echo ".$row['sname']." ?>" placeholder="Enter Spouse Name" required>
+<input type="text" class="form-control" name="sname" value="<?php echo $row['sname']; ?>" >
 </div>
 <div class="form-group">
 <label>Number of Children</label>
-<input type="text" class="form-control" name="<? echo ".$row['cname']." ?>" placeholder="Enter Child Info" required>
+<input type="text" class="form-control" name="cinfo" value="<?php echo $row['cinfo']; ?>" >
 </div>
-<!-- <div class="form-group">
-<label>Company info</label>
-<input type="number" class="form-control" name="<? echo ".$row['company']." ?>" placeholder="Enter Company info" required>
-</div> -->
+<div class="form-group">
+<label>Company</label>
+<input type="Number" class="form-control" name="company" value="<?php echo $row['company']; ?>" >
+</div>
 <div class="form-group">
 <label>Office Phone </label>
-<input type="text" class="form-control" name="<? echo ".$row['officephone']." ?>" placeholder="Enter Office Phone" required>
+<input type="text" class="form-control" name="officephone" value="<?php echo $row['officephone']; ?>" >
 </div>
 <div class="form-group">
 <label>Email</label>
-<input type="email" class="form-control" name="<? echo ".$row['email']." ?>" placeholder="Enter Email" required>
+<input type="email" class="form-control" name="email" value="<?php echo $row['email']; ?>" >
 </div>
 <div class="form-group">
 <label>Street Address </label>
-<input type="text" class="form-control" name="<? echo ".$row['address']." ?>" placeholder="Enter Street Address" required>
+<input type="text" class="form-control" name="address" value="<?php echo $row['address']; ?>" >
 </div>
 <div class="form-group">
 <label>Enter city</label>
-<input type="text" class="form-control" name="<? echo ".$row['city']." ?>" placeholder="Enter city" required>
+<input type="text" class="form-control" name="city" value="<?php echo $row['city']; ?>" >
 </div>
 <div class="form-group">
 <label>Enter State</label>
-<input type="text" class="form-control" name="<? echo ".$row['state']." ?>" placeholder="Enter state" required>
+<input type="text" class="form-control" name="state" value="<?php echo $row['state']; ?>" >
 </div>
 <div class="form-group">
 <label>Enter ZipCode</label>
-<input type="text" class="form-control" name="<? echo ".$row['zipcode']." ?>" placeholder="Enter zipcode" required>
+<input type="text" class="form-control" name="zipcode" value="<?php echo $row['zipcode']; ?>" >
 </div>
 <div class="submit-button">                           
-<a> <input class="btn btn-success" type="submit" name="submit" value="Add"></a>
+<a> <input class="btn btn-success" type="submit" name="submit" value="Edit"></a>
 </div>
 </form>
 </div>
@@ -268,7 +264,7 @@
 </div>
 <!-- /.content-wrapper -->
 <footer class="main-footer">
-<strong>Copyright &copy; 2016-2017 <a href="#">thememinister</a>.</strong> All rights reserved.
+<strong>Copyright &copy; 2019-2020 <a href="#">CRM Tool</a>.</strong> All rights reserved.
 </footer>
 </div>
 <!-- ./wrapper -->
@@ -308,4 +304,3 @@
 =====================================================================-->
 </body>
 </html>
-

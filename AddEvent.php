@@ -14,7 +14,7 @@ if ( !empty($evt_name) || !empty($evi_idd) || !empty($date) || !empty($time)) {
 //Prepare statement
       $stmt = sqlsrv_prepare($conn, $INSERT);
       sqlsrv_execute($stmt);
-       echo '<script type="text/javascript">window.location.href = "events.php";</script>';
+      echo '<script type="text/javascript">window.location.href = "events.php";</script>';
      } 
      sqlsrv_close($conn);
 

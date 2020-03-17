@@ -148,7 +148,7 @@
    </a>
    </li>
    <li>
-   <a href="document.html">
+   <a href="document.php">
    <i class="fa fa-file-text"></i> <span>Documents</span>
    <span class="pull-right-container">
    </span>
@@ -256,7 +256,7 @@
    <th>Child info</th>
    <th>Company Name</th>
    <th>Office Phone</th>
-   <th>Delete</th>
+   <th>Action</th>
    </tr>
    </thead>
    <tbody>
@@ -277,7 +277,7 @@
          <td>".$row['cinfo']."</td>
          <td>".$row['cname']."</td>
          <td>".$row['officephone']."</td>
-         <td><a href=\"deleteclient.php?c_id=".$row['c_id']."\" style='color:red'>Delete</a></td>
+         <td align='center'><a href=\"deleteclient.php?c_id=".$row['c_id']."\" style='color:red'>Delete |</a><a href=\"editclient.php?c_id=".$row['c_id']."\" style='color:none'> Edit</a></td>
          </tr>";
          }
          sqlsrv_free_stmt( $stmt);
@@ -385,7 +385,7 @@
    </div>
    <!-- /.content-wrapper -->
    <footer class="main-footer">
-   <strong>Copyright &copy; 2016-2017 <a href="#">thememinister</a>.</strong> All rights reserved.
+   <strong>Copyright &copy; 2019-2020 <a href="#">CRM Tool</a>.</strong> All rights reserved.
    </footer>
    </div>
    <!-- ./wrapper -->

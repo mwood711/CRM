@@ -132,7 +132,7 @@
 </a>
 </li>
 <li>
-<a href="document.html">
+<a href="document.php">
 <i class="fa fa-file-text"></i> <span>Documents</span>
 <span class="pull-right-container">
 </span>
@@ -353,7 +353,7 @@
 </div>
 <!-- /.content-wrapper -->
 <footer class="main-footer">
-<strong>Copyright &copy; 2016-2017 <a href="#">thememinister</a>.</strong> All rights reserved.
+<strong>Copyright &copy; 2019-2020 <a href="#">CRM Tool</a>.</strong> All rights reserved.
 </footer>
 </div>
 <!-- ./wrapper -->
