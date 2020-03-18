@@ -175,7 +175,7 @@
 <section class="content">
 <div class="row">
 <div class="col-lg-6 pinpin">
-<div class="card-body">
+<div class="card-body" id="content">
 <?php
         require ('dbconfig.php');
         $urlvariable = $_GET['file_id'];
@@ -217,7 +217,7 @@
 <?php
         require('dbconfig.php');
           $urlvariable = $_GET['cid'];
-        $sql = "SELECT file_id, filename FROM files, contact WHERE contact.c_id = files.contactid
+        $sql = "SELECT contactid, file_id, filename FROM files, contact WHERE contact.c_id = files.contactid
         and c_id = '$urlvariable' ";
         $stmt = sqlsrv_query( $conn, $sql );
         if( $stmt === false) {
@@ -228,7 +228,7 @@
         <tr>
         <td>".$row['file_id']."</td>
         <td>".$row['filename']."</td>
-        <td><a href=\"viewimage.php?file_id=".$row['file_id']."\">view file</a></td>
+        <td><a href=\"viewimage.php?cid=".$row['contactid']." & file_id=".$row['file_id']."\">view file</a></td>
         </tr>";
         }
         sqlsrv_free_stmt( $stmt);
