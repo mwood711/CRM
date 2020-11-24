@@ -1,12 +1,12 @@
 
 <?php
     require ('dbconfig.php');
-    $f_id =$_REQUEST['f_id'];
+    $faculty_id =$_REQUEST['faculty_id'];
     // sending query
-     $sql = "DELETE FROM faculty WHERE f_id = '$f_id'";
+     $sql = "DELETE FROM faculty WHERE faculty_id = '$faculty_id'";
      $stmt = sqlsrv_query( $conn, $sql );
      sqlsrv_execute($stmt);
-     echo '<script type="text/javascript">window.location.href = "faculty.php";</script>';
+     echo '<script type="text/javascript">window.location.href = "faculty";</script>';
   
      sqlsrv_close($conn);
 

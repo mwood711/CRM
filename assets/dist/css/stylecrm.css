@@ -304,7 +304,7 @@ a:active,
 a:focus {
     outline: none;
     text-decoration: none;
-    color: #fff;
+    color: black;
     -webkit-transition: all .3s;
     transition: all .3s;
 }
@@ -484,7 +484,7 @@ hr {
 
 .page-header {
     margin: 10px 0 20px 0;
-    font-size: 22px;
+    font-size:22px;
 }
 .page-header > small {
     color: #666;
@@ -506,8 +506,8 @@ hr {
     border: none;
     min-height: 60px;
     border-radius: 0;
-    background-color: #2A3F54;
-    border-bottom: 1px solid #2A3F54;
+    background-color: #febc11;
+    border-bottom: 1px solid black;
 }
 .layout-top-nav .main-header .navbar {
     margin-left: 0;
@@ -610,7 +610,7 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
     border-radius: 50em;
     height: 18px;
     width: 18px;
-    border: 1px solid #fff;
+    border: 10px solid #fff;
     color: #fff;
     font-size: 11px;
     line-height: 15px;
@@ -627,18 +627,20 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
     padding: 0 15px;
     font-weight: 300;
     overflow: hidden;
-    background-color: #0c0b0c;
+    background-color: ##febc11;
     color: #241d1d;
     -webkit-transition: width 0.3s ease-in-out;
     transition: width 0.3s ease-in-out;
-    border-bottom: 2px solid #0c0b0c;
+    border-bottom: 2px solid #fffefe;
 }
 .main-header .logo .logo-lg {
     display: block;
 }
-.main-header .logo .logo-lg img,
-.main-header .logo .logo-mini img {
+.main-header .logo .logo-lg img{
     height: 52px;
+}
+.main-header .logo .logo-mini img {
+    height: 28px;
 }
 .main-header .logo .logo-mini {
     display: none;
@@ -660,7 +662,7 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
 }
 .content-header .header-icon {
     font-size: 48px;
-    color: #009688;
+    color: #0a0a0a;
     width: 68px;
     float: left;
     margin-top: -4px;
@@ -1038,7 +1040,7 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
     transition: width 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
     transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
     transition: transform 0.3s ease-in-out, width 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
-    background-color: #010a0f;
+    background-color: #ffffff;
 }
 @media (max-width: 767px) {
     .main-sidebar,
@@ -1134,7 +1136,7 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
 .sidebar-menu > li > a {
     padding: 12px 5px 12px 15px;
     display: block;
-    color: #fefefe;
+    color: #000000;
     position: relative;
     font-size: 14px;
     font-weight: 500;
@@ -1155,8 +1157,8 @@ a.sidebar-toggle .pe-7s-angle-left-circle {
 }
 .sidebar-menu > li:hover > a,
 .sidebar-menu > li.active > a {
-    color: #009688;
-    background:#010a0f;
+    color: #febc11;
+    background:#000;
 }
 .sidebar-menu > li > a > .fa,
 .sidebar-menu > li > a > .glyphicon,
@@ -1727,7 +1729,7 @@ the class .animated-dropdown-menu to the .dropdown-menu ul (or ol)*/
     box-shadow: 0 0 5px #888;
     color: #e4e5e7;
     cursor: pointer;
-    background-color: #009688;
+    background-color: #000000;
     height: 130px;
     margin-bottom: 25px;
     border-radius: 4px;
@@ -1738,7 +1740,7 @@ the class .animated-dropdown-menu to the .dropdown-menu ul (or ol)*/
     box-shadow: 0 0 5px #888;
     color: #e4e5e7;
     cursor: pointer;
-    background-color: #009688;
+    background-color: #000000;
     height: 130px;
     margin-bottom: 25px;
     border-radius: 4px;
@@ -1749,7 +1751,7 @@ the class .animated-dropdown-menu to the .dropdown-menu ul (or ol)*/
     box-shadow: 0 0 5px #888;
     color: #e4e5e7;
     cursor: pointer;
-    background-color: #009688;
+    background-color: #000000;
     height: 130px;
     margin-bottom: 25px;
     border-radius: 4px;
@@ -1760,7 +1762,7 @@ the class .animated-dropdown-menu to the .dropdown-menu ul (or ol)*/
     box-shadow: 0 0 5px #888;
     color: #e4e5e7;
     cursor: pointer;
-    background-color: #009688;
+    background-color: #000000;
     height: 130px;
     margin-bottom: 25px;
     border-radius: 4px;
@@ -2931,27 +2933,27 @@ pre .arg {
     list-style:none;
 }
 .progress_bar_bg:before{
-	content: '';
-	position: absolute;
-	height: 100%;
-	width: 100%;
-	background: rgba(0,0,0,.7);
-	left: 0;
-	top: 0;
-	
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,.7);
+    left: 0;
+    top: 0;
+    
 }
 .skills-bar-container li {
-	position: relative;
-	width: 85%;
-	padding: 5px;
-	box-sizing: border-box;
+    position: relative;
+    width: 85%;
+    padding: 5px;
+    box-sizing: border-box;
 }
 .skills-bar-container li .progressbar-title {
   color: #fff;
 }
 .skills-bar-container li .progressbar-title h3 {
-	display: inline-block;
-	font-size: 20px;
+    display: inline-block;
+    font-size: 20px;
 }
 .skills-bar-container li .progressbar-title .percent {
     position: absolute;
@@ -3066,7 +3068,7 @@ pre .arg {
 }
 
 .progressgreen {
-	background-color:#27AE60;
+    background-color:#27AE60;
 }
 
 @-webkit-keyframes progress-html {
@@ -5358,7 +5360,7 @@ td {
 }
 
 .back_table_color{
-    background:#D9EDF7;
+    background:#ececec;
 }
 .table.no-border,
 .table.no-border td,
@@ -5416,7 +5418,7 @@ table.text-center th {
     border: 1px solid #e4e5e7;
 }
 .green_btn{
-    background:#009688;
+    background:#000000;
     color:#fff;
     font-size:14px;
 }
@@ -5658,9 +5660,9 @@ table.text-center th {
     border: 1px solid #2A3F54;
 }
 .btn-exp {
-    background: #009688;
+    background: #000000;
     color: #fbfbfb;
-    border: 1px solid #009688;
+    border: 1px solid #000000;
     margin-bottom: 5px;
     font-size: 12px;
     height: 27px;
@@ -5699,14 +5701,14 @@ table.text-center th {
     border:1px solid#009688;
 }
 .btn-add:hover {
-    background: #009688;
+    background: #0e0d0d;
     color: #fbfbfb;
-    border: 1px solid #009688;
+    border: 1px solid #5f5f5f;
 }
 .btn-add {
-    background: #009688;
-    color: #fbfbfb;
-    border: 1px solid #009688;
+    background: #000000;
+    color: #e1e6ef;
+    border: 1px solid #000000;
     font-size:14px;
 }
 .card {
@@ -5865,7 +5867,7 @@ table.text-center th {
     position: relative;
     border-top-right-radius: 0px;
     border-top-left-radius: 0px;
-    background: #E8F1F3;
+    background: #febc11;
 }
 .lobicard > .card-header > .card-title {
     float: left;

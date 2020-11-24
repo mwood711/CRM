@@ -5,16 +5,16 @@ $email = $_POST['email'];
 $phone = $_POST['phone'];
 $address = $_POST['address'];
 if ( !empty($firstname) || !empty($lastname) || !empty($email) || !empty($phone) || !empty($address)) {
-    $serverName = "localhost\\SQLEXPRESS";
+    $serverName = "localhost";
  //creating a connection to the SQL database
-    $connectionInfo = array( "Database"=>"ksu_crm");
+    $connectionInfo = array( "Database"=>"crm");
     $conn = sqlsrv_connect( $serverName, $connectionInfo);
   {
-     $INSERT = "INSERT Into faculty ( firstname, lastname, email, phone, address) VALUES('$firstname', '$lastname', '$email', '$phone', '$address')";
+     $INSERT = "INSERT Into faculty (faculty_id, fname, lname, email, phone, address) VALUES(16, '$firstname', '$lastname', '$email', '$phone', '$address')";
 //Prepare statement
       $stmt = sqlsrv_prepare($conn, $INSERT);
       sqlsrv_execute($stmt);
-      echo '<script type="text/javascript">window.location.href = "faculty.php";</script>';
+      echo '<script type="text/javascript">window.location.href = "faculty";</script>';
      } 
      sqlsrv_close($conn);
 

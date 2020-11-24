@@ -1,12 +1,12 @@
 
 <?php
     require ('dbconfig.php');
-    $evt_id =$_REQUEST['evt_id'];
+    $event_type_id =$_REQUEST['event_type_id'];
     // sending query
-     $sql = "DELETE FROM eventtype WHERE evt_id = '$evt_id'";
+     $sql = "DELETE FROM eventtype WHERE event_type_id = '$event_type_id'";
      $stmt = sqlsrv_query( $conn, $sql );
      sqlsrv_execute($stmt);
-     echo '<script type="text/javascript">window.location.href = "events.php";</script>';
+     echo '<script type="text/javascript">window.location.href = "events";</script>';
   
      sqlsrv_close($conn);
 

@@ -6,7 +6,7 @@ $place = $_POST['place'] ??'';
 $amount = $_POST['amount'] ??'';
 $c_id = $_POST['c_id'] ??'';
 if ( !empty($e_type) || !empty($notes) || !empty($f_attending) || !empty($place) || !empty($amount) || !empty($c_id) ) {
-    $serverName = "localhost\\SQLEXPRESS";
+    $serverName = "localhost";
  //creating a connection to the SQL database
     $connectionInfo = array( "Database"=>"ksu_crm");
     $conn = sqlsrv_connect( $serverName, $connectionInfo);
@@ -15,7 +15,7 @@ if ( !empty($e_type) || !empty($notes) || !empty($f_attending) || !empty($place)
 //Prepare statement
       $stmt = sqlsrv_prepare($conn, $INSERT);
       sqlsrv_execute($stmt);
-       echo '<script type="text/javascript">window.location.href = "events.php";</script>';
+       echo '<script type="text/javascript">window.location.href = "events";</script>';
      } 
      sqlsrv_close($conn);
 

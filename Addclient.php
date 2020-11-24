@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CRM Admin Panel</title>
+<title>Add Client</title>
 <!-- Favicon and touch icons -->
-<link rel="shortcut icon" href="assets/dist/img/ico/favicon.png" type="image/x-icon">
+<link rel="shortcut icon" href="assets/dist/img/ico/ksu-favicon.png" type="image/x-icon">
 <!-- Start Global Mandatory Style
 =====================================================================-->
 
@@ -49,184 +49,59 @@
 
 </head>
 <body class="hold-transition sidebar-mini">
-<!--preloader-->
-<div id="preloader">
-<div id="status"></div>
-</div>
-<!-- Site wrapper -->
-<div class="wrapper">
-<header class="main-header">
-<a href="index.php" class="logo">
-<!-- Logo -->
-<span class="logo-mini">
-<img src="assets/dist/img/mini-logo.png" alt="">
-</span>
-<span class="logo-lg">
-<img src="assets/dist/img/logo.png" alt="">
-</span>
-</a>
-<!-- Header Navbar -->
-<nav class="navbar navbar-expand py-0">
-<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-<!-- Sidebar toggle button-->
-<span class="sr-only">Toggle navigation</span>
-<span class="pe-7s-angle-left-circle"></span>
-</a>
-<!-- searchbar-->
-<a href="#search"><span class="pe-7s-search"></span></a>
-<div id="search">
-<button type="button" class="close">×</button>
-<form>
-<input type="search" value="" placeholder="Search.." />
-<button type="submit" class="btn btn-add">Search...</button>
-</form>
-</div>
-<div class="collapse navbar-collapse navbar-custom-menu" >
-<ul class="navbar-nav ml-auto">
 
-<!-- Help -->
-<li class="nav-item dropdown  dropdown-help">
-<a class="nav-link hidden_hidden" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-<i class="pe-7s-settings"></i></a>
-<div class="dropdown-menu drop_down" >
-<div class="menus">
-<a class="dropdown-item" href="#"> <i class="fa fa-line-chart"></i> Networking</a>
-<a class="dropdown-item" href="#"><i class="fa fa fa-bullhorn"></i> Lan settings</a>
-<a class="dropdown-item" href="#"><i class="fa fa-bar-chart"></i> Settings</a>
-<a class="dropdown-item" href="#"><i class="fa fa-wifi"></i> wifi</a>
-</div>
-</div>
-</li>
-<!-- User -->
-<li class="nav-item dropdown dropdown-user">
-<a class="nav-link" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-<img src="assets/dist/img/avatar5.png" class="rounded-circle" alt="user"></a>
-<div class="dropdown-menu drop_down" >
-<div class="menus">
-<a class="dropdown-item" href="#"><i class="fa fa-user"></i> User Profile</a>
-<a class="dropdown-item" href="#"><i class="fa fa-inbox"></i> Inbox</a>
-<a class="dropdown-item" href="#"><i class="fa fa-sign-out"></i> Signout</a>
-</div>
-</div>
-</li>
-</ul>
-</div>
-</nav>
-</header>
-<!-- =============================================== -->
-<!-- Left side column. contains the sidebar -->
-<aside class="main-sidebar">
-<!-- sidebar -->
-<div class="sidebar">
-<!-- sidebar menu -->
-<ul class="sidebar-menu">
-<li>
-<a href="index.php"><i class="fa fa-tachometer"></i><span>Dashboard</span>
-<span class="pull-right-container">
-</span>
-</a>
-</li>
-<li class="treeview">
-<a href="#">
-<i class="fa fa-users"></i><span>Client</span>
-<span class="pull-right-container">
-<i class="fa fa-angle-left float-right"></i>
-</span>
-</a>
-<ul class="treeview-menu">
-<li class="active"><a href="addclient.php">Add New Client</a></li>
-<li><a href="clientlist.php">Client List</a></li>
-<!-- <li><a href="group.html">Groups</a></li> -->
-</ul>
-</li>
-<li> 
-<a href="faculty.php">
-<i class="fa fa-user-circle"></i><span>Faculty</span>
-<span class="pull-right-container">
-</span>
-</a>
-</li>
-<li>
-<a href="events.php">
-<i class="fa fa-tree"></i><span>Events</span>
-<span class="pull-right-container">
-</span>
-</a>
-</li>
-<li>
-<a href="document.php">
-<i class="fa fa-file-text"></i> <span>Documents</span>
-<span class="pull-right-container">
-</span>
-</a>
-</li>
-</ul>
-</div>
-<!-- /.sidebar -->
-</aside>
+<!-- header -->
+<?php 
+
+    include 'assets/php/top-nav.php';
+?> 
+<div>
+
 <!-- =============================================== -->
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="container-fluid">
 <!-- Content Header (Page header) -->
 <section class="content-header">
 <div class="header-icon">
 <i class="fa fa-users"></i>
 </div>
 <div class="header-title">
-<h1>Add Client</h1>
-<small>client list</small>
+<h1>Add Contact</h1>
+<small></small>
 </div>
 </section>
 <!-- Main content -->
 <div class="content">
 <div class="row">
-<!-- Form controls -->
+<!-- Form controls/labels -->
 <div class="col-sm-12">
 <div class="card lobicard all_btn_card" id="lobicard-custom-control1" data-sortable="true">
 <div class="card-header all_card_btn">
 <div class="card-title custom_title">
-<a class="btn btn-add" href="clientlist.php"><i class="fa fa-list"></i> client List </a>  
+<a class="btn btn-add" href="clientlist"><i class="fa fa-list"></i> Contact List </a>  
 </div>
 </div>
 <div class="card-body">
-<form class="col-sm-6" action="addcl.php" method="POST">
+<form class="col-sm-6" action="addc.php" method="POST">
 <div class="form-group">
 <label>First Name</label>
 <input type="text" class="form-control" name="fname" placeholder="Enter First Name" required>
 </div>
 <div class="form-group">
 <label>Last Name</label>
-<input type="text" class="form-control" name="lname" placeholder="Enter last Name" required>
+<input type="text" class="form-control" name="lname" placeholder="Enter Last Name" required>
 </div>
 <div class="form-group">
-<label>title</label>
-<input type="test" class="form-control" name="title" placeholder="Enter title" required>
+<label>Title</label>
+<input type="test" class="form-control" name="title" placeholder="Enter Title" required>
 </div>
 <div class="form-group">
-<label>Spouse</label>
-<input type="text" class="form-control" name="sname" placeholder="Enter Spouse Name" required>
-</div>
-<div class="form-group">
-<label>Number of Children</label>
-<input type="text" class="form-control" name="cinfo" placeholder="Enter Child Info" required>
-</div>
-<div class="form-group">
-<label>Company info</label>
-<select class="form-control" name="company" id="inputGroupSelect">
-    <option selected>--Select Company--</option>
-     <?php
-          require('dbconfig.php');
-          $sql = "SELECT * FROM company"; 
-          $stmt = sqlsrv_query($conn, $sql );
-          while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ){
-          echo "<option value='".$row['company_id']."'>".$row['cname']."</option>";
-          }
-      ?>
-  </select>
+<label>Info</label>
+<input type="text" class="form-control" name="info" placeholder="Enter Additional Info" required>
 </div>
 <div class="form-group">
 <label>Office Phone </label>
-<input type="text" class="form-control" name="officephone" placeholder="Enter Office Phone" required>
+<input type="text" class="form-control" name="phone" placeholder="Enter Office Phone" required>
 </div>
 <div class="form-group">
 <label>Email</label>
@@ -237,17 +112,48 @@
 <input type="text" class="form-control" name="address" placeholder="Enter Street Address" required>
 </div>
 <div class="form-group">
-<label>Enter city</label>
-<input type="text" class="form-control" name="city" placeholder="Enter city" required>
+<label>Enter City</label>
+<input type="text" class="form-control" name="city" placeholder="Enter City" required>
 </div>
 <div class="form-group">
 <label>Enter State</label>
-<input type="text" class="form-control" name="state" placeholder="Enter state" required>
+<input type="text" class="form-control" name="state" placeholder="Enter State" required>
 </div>
 <div class="form-group">
-<label>Enter ZipCode</label>
-<input type="text" class="form-control" name="zipcode" placeholder="Enter zipcode" required>
+<label>Enter Zip Code</label>
+<input type="text" class="form-control" name="zip" placeholder="Enter Zipcode" required>
 </div>
+<div class="form-group">
+<label>Company Info</label>
+<select class="form-control" name="company_id" id="inputGroupSelect">
+    <option selected>--Select Company--</option>
+     <?php
+          require('dbconfig.php');
+          $sql = "SELECT * FROM company"; 
+          $stmt = sqlsrv_query($conn, $sql );
+          while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ){
+          echo "<option value='".$row['company_id']."'>".$row['company_name']."</option>";
+          }
+      ?>
+  </select>
+</div>
+<?php 
+
+    require('dbconfig.php');
+    $sql = "SELECT TOP 1 * FROM Contact ORDER BY contact_id DESC";
+    $stmt = sqlsrv_query( $conn, $sql );
+    if( $stmt === false) {
+    die( print_r( sqlsrv_errors(), true) );
+    }
+    while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+
+        $id = $row['contact_id'] + 1;
+
+    }
+    sqlsrv_free_stmt( $stmt);
+
+ ?>
+<input type="hidden" name="id" value="<?php echo $id ?>"/>
 <div class="submit-button">                           
 <a> <input class="btn btn-success" type="submit" name="submit" value="Add"></a>
 </div>
@@ -259,10 +165,11 @@
 </div>
 <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
-<footer class="main-footer">
-<strong>Copyright &copy; 2019-2020 <a href="#">CRM Tool</a>.</strong> All rights reserved.
-</footer>
+
+<!-- footer -->
+<?php 
+    include 'assets/php/footer.php';
+?>
 </div>
 <!-- ./wrapper -->
 <!-- Start Core Plugins

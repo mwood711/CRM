@@ -1,6 +1,6 @@
 
 <?php
-//Variable decalration 
+//Variable declaration 
 $c_id=$_POST['c_id'];
 $fname = $_POST['fname'];
 $lname = $_POST['lname'];
@@ -16,7 +16,7 @@ $state = $_POST['state'];
 $zipcode = $_POST['zipcode'];
 
 //creating a connection to the SQL database
-    $serverName = "localhost\\SQLEXPRESS";
+    $serverName = "localhost";
     $connectionInfo = array( "Database"=>"ksu_crm");
     $conn = sqlsrv_connect( $serverName, $connectionInfo);
     {
@@ -24,7 +24,7 @@ $zipcode = $_POST['zipcode'];
 //Prepare statement
       $stmt = sqlsrv_prepare($conn, $sql);
       sqlsrv_execute($stmt);
-      echo '<script type="text/javascript">window.location.href = "clientlist.php";</script>';
+      echo '<script type="text/javascript">window.location.href = "clientlist";</script>';
      } 
      sqlsrv_close($conn);
 

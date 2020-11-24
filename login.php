@@ -1,6 +1,6 @@
 <?php
  //creating a connection to the SQL database
-  $serverName = "localhost\\SQLEXPRESS";
+  $serverName = "localhost";
   $connectionInfo = array( "Database"=>"ksu_crm");
   $conn = sqlsrv_connect( $serverName, $connectionInfo);
 
@@ -20,7 +20,7 @@ if(isset($_POST) && !empty($_POST['username']) && !empty($_POST['password']))
 // check password to match DB
     if($password === $stmt['password'])
         {
-        echo '<script type="text/javascript">window.location.href = "index.php";</script>';
+        echo '<script type="text/javascript">window.location.href = "index";</script>';
 }
 else 
        echo '<script type="text/javascript">window.location.href = "login.html";</script>';

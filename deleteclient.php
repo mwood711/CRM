@@ -1,12 +1,12 @@
 
 <?php
     require ('dbconfig.php');
-    $c_id =$_REQUEST['c_id'];
+    $contact_id =$_REQUEST['contact_id'];
     // sending query
-     $sql = "DELETE FROM contact WHERE c_id = '$c_id'";
+     $sql = "DELETE FROM contact WHERE contact_id = '$contact_id'";
      $stmt = sqlsrv_query( $conn, $sql );
      sqlsrv_execute($stmt);
-     echo '<script type="text/javascript">window.location.href = "clientlist.php";</script>';
+     echo '<script type="text/javascript">window.location.href = "clientlist";</script>';
   
      sqlsrv_close($conn);
 

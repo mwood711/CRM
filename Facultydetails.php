@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-<title>CRM Admin panel</title>
+<title>Faculty Details</title>
 <!-- Favicon and touch icons -->
-<link rel="shortcut icon" href="assets/dist/img/ico/favicon.png" type="image/x-icon">
+<link rel="shortcut icon" href="assets/dist/img/ico/ksu-favicon.png" type="image/x-icon">
 <!-- Start Global Mandatory Style
 =====================================================================-->
 <!-- lobicard tather css -->
@@ -38,278 +38,77 @@
 <!--<link href="assets/dist/css/stylecrm-rtl.css" rel="stylesheet" />-->
 <!-- End Theme Layout Style
 =====================================================================-->
+
+<style>
+    small a { color:    #008B8B; }
+    small a:hover { color: grey; };
+</style>
 </head>
 <body class="hold-transition sidebar-mini">
-<!--preloader-->
-<div id="preloader">
-<div id="status"></div>
-</div>
-<!-- Site wrapper -->
-<div class="wrapper">
-<header class="main-header">
-<a href="index.php" class="logo">
-<!-- Logo -->
-<span class="logo-mini">
-<img src="assets/dist/img/mini-logo.png" alt="">
-</span>
-<span class="logo-lg">
-<img src="assets/dist/img/logo.png" alt="">
-</span>
-</a>
-<!-- Header Navbar -->
-<nav class="navbar navbar-expand py-0">
-<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-<!-- Sidebar toggle button-->
-<span class="sr-only">Toggle navigation</span>
-<span class="pe-7s-angle-left-circle"></span>
-</a>
-<!-- searchbar-->
-<a href="#search"><span class="pe-7s-search"></span></a>
-<div id="search">
-<button type="button" class="close">×</button>
-<form>
-<input type="search" value="" placeholder="Search.." />
-<button type="submit" class="btn btn-add">Search...</button>
-</form>
-</div>
-<div class="collapse navbar-collapse navbar-custom-menu" >
-<ul class="navbar-nav ml-auto">
-<!-- User -->
-<li class="nav-item dropdown dropdown-user">
-<a class="nav-link" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-<img src="assets/dist/img/avatar5.png" class="rounded-circle" width="50" height="50" alt="user"></a>
 
-<div class="dropdown-menu drop_down" >
-<div class="menus">
-<a class="dropdown-item" href="#"><i class="fa fa-user"></i> User Profile</a>
-<a class="dropdown-item" href="#"><i class="fa fa-inbox"></i> Inbox</a>
-<a class="dropdown-item" href="#"><i class="fa fa-sign-out"></i> Signout</a>
-</div>
-</div>
-</li>
-</ul>
-</div>
-</nav>
-</header>
-<!-- =============================================== -->
-<!-- Left side column. contains the sidebar -->
-<aside class="main-sidebar">
-<!-- sidebar -->
-<div class="sidebar">
-<!-- sidebar menu -->
-<ul class="sidebar-menu">
-<li>
-<a href="index.php"><i class="fa fa-tachometer"></i><span>Dashboard</span>
-<span class="pull-right-container">
-</span>
-</a>
-</li>
-<li class="treeview">
-<a href="#">
-<i class="fa fa-users"></i><span>Customers</span>
-<span class="pull-right-container">
-<i class="fa fa-angle-left float-right"></i>
-</span>
-</a>
-<ul class="treeview-menu">
-<li><a href="add-customer.html">Add Customer</a></li>
-<li class="active"><a href="clist.php">List</a></li>
-<!-- <li><a href="group.html">Groups</a></li> -->
-</ul>
-</li>
-<li> 
-<a href="user.php">
-<i class="fa fa-user-circle"></i><span>Faculty</span>
-<span class="pull-right-container">
-</span>
-</a>
-</li>
-<li>
-<a href="department.php">
-<i class="fa fa-tree"></i><span>Events</span>
-<span class="pull-right-container">
-</span>
-</a>
-</li>
-<li>
-<a href="document.php">
-<i class="fa fa-file-text"></i> <span>Documents</span>
-<span class="pull-right-container">
-</span>
-</a>
-</li>
-</ul>
-</div>
-<!-- /.sidebar -->
-</aside>
-<!-- =============================================== -->
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<?php 
+
+      include 'assets/php/top-nav.php';
+?>
+<div>
+
+<div class="container-fluid">
 <!-- Content Header (Page header) -->
 <section class="content-header">
 <div class="header-icon"><i class="fa fa-user-circle-o"></i></div>
 <div class="header-title">
-<h1>Customer Details</h1>
-<small>Show Customer and Event details</small>
+<h1>Faculty Details</h1>
+<small><a href="faculty">Back to List</a></small>
 </div>
 </section>
 <!-- Main content -->
 <section class="content">
-<div class="col-sm-12 col-lg-4 col-md-12 col-12">
-<div class="card">
+<div class="row">
+<div class="col-sm-4 pinpin">
+<div class="card lobicard"  data-sortable="true">
+<div class="card-header lobicard-custom-control">
+<div class="card-title custom_title">
+    <h4>Faculty Information</h4>
+</div>
+</div>
 <div class="card-body">
-<ul class="list-group">
-<li class="list-group-item list-group-item-success" style="font-weight: 700">
-
+<div class="table-responsive">
+<table class="table table-bordered table-hover">
+<tbody>
         <?php
-        $serverName = "localhost\\SQLEXPRESS";
-        $connectionInfo = array( "Database"=>"ksu_crm");
-        $urlvariable = $_GET['evt'];
-        $conn = sqlsrv_connect( $serverName, $connectionInfo );
-        if( $conn === false ) {
-        die( print_r( sqlsrv_errors(), true));
-        }  
-        $sql = "select CONCAT (fname,' ',lname) AS name, cname, title, officephone, email 
-        from contact, company
-        WHERE company.company_id = contact.company 
-        and contact.c_id = '$urlvariable'";
+         require ('dbconfig.php');
+        $urlvariable = $_GET['faculty_id'];
+        $sql = "SELECT * 
+                FROM faculty 
+                WHERE faculty_id = '".$urlvariable."'";
         $stmt = sqlsrv_query( $conn, $sql );
         if( $stmt === false) {
         die( print_r( sqlsrv_errors(), true) );
         }
 
         while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
-        echo "<table>";
-        echo "
-        <tr><td><b>Client Name :</b></td><td>".$row['name']."</td></tr>
-        <tr><td><b>Company :</b></td><td>".$row['cname']."</td></tr>
-        <tr><td><b>Client Role :</b></td><td>".$row['title']."</td></tr>
-        <tr><td><b>Office Phone :</b></td><td>".$row['officephone']."</td></tr>
-        <tr><td><b>Email :</b></td><td>".$row['email']."</td></tr>
-        ";
-        echo "</table>";
+        echo 
+        "
+        <tr><th>First Name :</th><td>".$row['fname']."</td></tr>
+        <tr><th>Last Name :</th><td>".$row['lname']."</td></tr>
+        <tr><th>Phone :</th><td>".$row['phone']."</td></tr>
+        <tr><th>Email :</th><td>".$row['email']."</td></tr>
+        <tr><th>Address :</th><td>".$row['address']."</td></tr>";
         }
         sqlsrv_free_stmt( $stmt);
         ?>
-</li>
-</ul>
-</div>
-</div> 
-</section>
-<section class="content">
-<div class="row">
-<div class="col-lg-6 pinpin">
-<div class="card lobicard"  data-sortable="true">
-<div class="card-header lobicard-custom-control">
-<div class="btn-group d-flex" role="group">
-</div> 
-<!--============================================-->
-<div class="card-title custom_title">
-<h4>Client Attendees</h4>
-</div>
-</div>
-<div class="card-body">
-<div class="table-responsive">
-<table class="table table-bordered table-hover">
-<thead class="back_table_color">
-<tr class="info">
-<th>Client First Name</th>
-<th>Client Last Name</th>
-<th>Company</th>
-</tr>
-</thead>
-<tbody>
-            <?php
-            $serverName = "localhost\\SQLEXPRESS";
-            $connectionInfo = array( "Database"=>"ksu_crm");
-            $urlvariable = $_GET['evt'];
-            $conn = sqlsrv_connect( $serverName, $connectionInfo );
-            if( $conn === false ) {
-            die( print_r( sqlsrv_errors(), true));
-            }
-
-            $sql = "select fname, lname, cname from contact, company, eventdetails
-            where company.company_id = contact.c_id
-            and eventdetails.c_id = contact.c_id
-            and eventdetails.e_type = '$urlvariable'
-            group by fname,lname, cname";
-            $stmt = sqlsrv_query( $conn, $sql );
-            if( $stmt === false) {
-            die( print_r( sqlsrv_errors(), true) );
-            }
-
-            while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
-            echo 
-            "<tr>
-            <td>".$row['fname']."</td>
-            <td>".$row['lname']."</td>
-            <td>".$row['cname']."</td>
-            </tr>" ; 
-            }
-            sqlsrv_free_stmt( $stmt);
-            ?>
 </tbody>
 </table>
 </div>
 </div>
 </div>
 </div>
-<div class="col-lg-6 pinpin">
-<div class="card lobicard"  data-sortable="true">
-<div class="card-header lobicard-custom-control">
-<div class="card-title custom_title">
-<h4>Faculties</h4>
-</div>
-</div>
-<div class="card-body">
-  <!--============================================-->
-<div class="table-responsive">
-<table class="table table-bordered table-hover">
-<thead class="back_table_color">
-<tr class="info">
-<th>Event Identifier ID</th>
-<th>Event Identifier Name</th>
-</tr>
-</thead>
-<tbody>
-          <?php
-          $serverName = "localhost\\SQLEXPRESS";
-          $connectionInfo = array( "Database"=>"ksu_crm");
-          $urlvariable = $_GET['evt'];
-          $conn = sqlsrv_connect( $serverName, $connectionInfo );
-          if( $conn === false ) {
-          die( print_r( sqlsrv_errors(), true));
-          }
-
-          $sql = "select firstname, lastname from faculty, eventdetails
-          where eventdetails.f_attending = faculty.f_id
-          and eventdetails.e_type = '$urlvariable'
-          group by firstname, lastname";
-          $stmt = sqlsrv_query( $conn, $sql );
-          if( $stmt === false) {
-          die( print_r( sqlsrv_errors(), true) );
-          }
-
-          while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
-          echo "<tr><td>".$row['firstname']."</td><td>".$row['lastname']."</td></tr>" ;
-
-          }
-          sqlsrv_free_stmt( $stmt);
-          ?>
-</tbody>
-</table>
-</div>
-</div>
-</div>
 </div>
 </section>
+
 <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
-<footer class="main-footer">
-<strong>Copyright &copy; 2019-2020 <a href="#">CRM Tool</a>.</strong> All rights reserved.
-</footer>
-</div>
+
 <!-- ./wrapper -->
 <!-- Start Core Plugins
 =====================================================================-->
@@ -347,4 +146,3 @@
 =====================================================================-->
 </body>
 </html>
-

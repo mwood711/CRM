@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CRM Admin Panel</title>
+<title>Edit Client</title>
 <!-- Favicon and touch icons -->
-<link rel="shortcut icon" href="assets/dist/img/ico/favicon.png" type="image/x-icon">
+<link rel="shortcut icon" href="assets/dist/img/ico/ksu-favicon.png" type="image/x-icon">
 <!-- Start Global Mandatory Style
 =====================================================================-->
 
@@ -49,131 +49,21 @@
 
 </head>
 <body class="hold-transition sidebar-mini">
-<!--preloader-->
-<div id="preloader">
-<div id="status"></div>
-</div>
-<!-- Site wrapper -->
-<div class="wrapper">
-<header class="main-header">
-<a href="index.html" class="logo">
-<!-- Logo -->
-<span class="logo-mini">
-<img src="assets/dist/img/mini-logo.png" alt="">
-</span>
-<span class="logo-lg">
-<img src="assets/dist/img/logo.png" alt="">
-</span>
-</a>
-<!-- Header Navbar -->
-<nav class="navbar navbar-expand py-0">
-<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-<!-- Sidebar toggle button-->
-<span class="sr-only">Toggle navigation</span>
-<span class="pe-7s-angle-left-circle"></span>
-</a>
-<!-- searchbar-->
-<a href="#search"><span class="pe-7s-search"></span></a>
-<div id="search">
-<button type="button" class="close">×</button>
-<form>
-<input type="search" value="" placeholder="Search.." />
-<button type="submit" class="btn btn-add">Search...</button>
-</form>
-</div>
-<div class="collapse navbar-collapse navbar-custom-menu" >
-<ul class="navbar-nav ml-auto">
 
-<!-- Help -->
-<li class="nav-item dropdown  dropdown-help">
-<a class="nav-link hidden_hidden" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-<i class="pe-7s-settings"></i></a>
-<div class="dropdown-menu drop_down" >
-<div class="menus">
-<a class="dropdown-item" href="#"> <i class="fa fa-line-chart"></i> Networking</a>
-<a class="dropdown-item" href="#"><i class="fa fa fa-bullhorn"></i> Lan settings</a>
-<a class="dropdown-item" href="#"><i class="fa fa-bar-chart"></i> Settings</a>
-<a class="dropdown-item" href="#"><i class="fa fa-wifi"></i> wifi</a>
-</div>
-</div>
-</li>
-<!-- User -->
-<li class="nav-item dropdown dropdown-user">
-<a class="nav-link" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-<img src="assets/dist/img/avatar5.png" class="rounded-circle" alt="user"></a>
-<div class="dropdown-menu drop_down" >
-<div class="menus">
-<a class="dropdown-item" href="#"><i class="fa fa-user"></i> User Profile</a>
-<a class="dropdown-item" href="#"><i class="fa fa-inbox"></i> Inbox</a>
-<a class="dropdown-item" href="#"><i class="fa fa-sign-out"></i> Signout</a>
-</div>
-</div>
-</li>
-</ul>
-</div>
-</nav>
-</header>
-<!-- =============================================== -->
-<!-- Left side column. contains the sidebar -->
-<aside class="main-sidebar">
-<!-- sidebar -->
-<div class="sidebar">
-<!-- sidebar menu -->
-<ul class="sidebar-menu">
-<li>
-<a href="index.html"><i class="fa fa-tachometer"></i><span>Dashboard</span>
-<span class="pull-right-container">
-</span>
-</a>
-</li>
-<li class="treeview">
-<a href="#">
-<i class="fa fa-users"></i><span>Client</span>
-<span class="pull-right-container">
-<i class="fa fa-angle-left float-right"></i>
-</span>
-</a>
-<ul class="treeview-menu">
-<li class="active"><a href="addclient.php">Add New Client</a></li>
-<li><a href="clientlist.php">Client List</a></li>
-<!-- <li><a href="group.html">Groups</a></li> -->
-</ul>
-</li>
-<li> 
-<a href="faculty.php">
-<i class="fa fa-user-circle"></i><span>Faculty</span>
-<span class="pull-right-container">
-</span>
-</a>
-</li>
-<li>
-<a href="events.php">
-<i class="fa fa-tree"></i><span>Events</span>
-<span class="pull-right-container">
-</span>
-</a>
-</li>
-<li>
-<a href="document.php">
-<i class="fa fa-file-text"></i> <span>Documents</span>
-<span class="pull-right-container">
-</span>
-</a>
-</li>
-</ul>
-</div>
-<!-- /.sidebar -->
-</aside>
-<!-- =============================================== -->
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<?php 
+
+      include 'assets/php/top-nav.php';
+?>
+<div>
+
+<div class="container-fluid">
 <!-- Content Header (Page header) -->
 <section class="content-header">
 <div class="header-icon">
 <i class="fa fa-users"></i>
 </div>
 <div class="header-title">
-<h1>Add Client</h1>
+<h1>Edit Client</h1>
 <small>client list</small>
 </div>
 </section>
@@ -185,7 +75,7 @@
 <div class="card lobicard all_btn_card" id="lobicard-custom-control1" data-sortable="true">
 <div class="card-header all_card_btn">
 <div class="card-title custom_title">
-<a class="btn btn-add" href="clientlist.php"><i class="fa fa-list"></i> client List </a>  
+<a class="btn btn-add" href="clientlist"><i class="fa fa-list"></i> client List </a>  
 </div>
 </div>
 
@@ -262,10 +152,10 @@ $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC)
 </div>
 <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
-<footer class="main-footer">
-<strong>Copyright &copy; 2019-2020 <a href="#">CRM Tool</a>.</strong> All rights reserved.
-</footer>
+<!-- footer -->
+<?php 
+     include 'assets/php/footer.php';
+?>
 </div>
 <!-- ./wrapper -->
 <!-- Start Core Plugins

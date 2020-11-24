@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CRM Admin panel</title>
+<title>Events</title>
 <!-- Favicon and touch icons --> 
-<link rel="shortcut icon" href="assets/dist/img/ico/favicon.png" type="image/x-icon">
+<link rel="shortcut icon" href="assets/dist/img/ico/ksu-favicon.png" type="image/x-icon">
 <!-- Start Global Mandatory Style
 =====================================================================-->
 
@@ -41,126 +41,13 @@
 =====================================================================-->
 </head>
 <body class="hold-transition sidebar-mini">
-<!--preloader-->
-<div id="preloader">
-<div id="status"></div>
-</div>
-<!-- Site wrapper -->
-<div class="wrapper">
-<header class="main-header">
-<a href="index.php" class="logo">
-<!-- Logo -->
-<span class="logo-mini">
-<img src="assets/dist/img/mini-logo.png" alt="">
-</span>
-<span class="logo-lg">
-<img src="assets/dist/img/logo.png" alt="">
-</span>
-</a>
-<!-- Header Navbar -->
-<nav class="navbar navbar-expand py-0">
-<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-<!-- Sidebar toggle button-->
-<span class="sr-only">Toggle navigation</span>
-<span class="pe-7s-angle-left-circle"></span>
-</a>
-<!-- searchbar-->
-<a href="#search"><span class="pe-7s-search"></span></a>
-<div id="search">
-<button type="button" class="close">×</button>
-<form>
-<input type="search" value="" placeholder="Search.." />
-<button type="submit" class="btn btn-add">Search...</button>
-</form>
-</div>
-<div class="collapse navbar-collapse navbar-custom-menu" >
-<ul class="navbar-nav ml-auto">
+<?php 
 
-<!-- Help -->
-<li class="nav-item dropdown  dropdown-help">
-<a class="nav-link hidden_hidden" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-<i class="pe-7s-settings"></i></a>
+      include 'assets/php/top-nav.php';
+?>
+<div>
 
-<div class="dropdown-menu drop_down" >
-<div class="menus">
-<a class="dropdown-item" href="#"> <i class="fa fa-line-chart"></i> Networking</a>
-<a class="dropdown-item" href="#"><i class="fa fa fa-bullhorn"></i> Lan settings</a>
-<a class="dropdown-item" href="#"><i class="fa fa-bar-chart"></i> Settings</a>
-<a class="dropdown-item" href="#"><i class="fa fa-wifi"></i> wifi</a>
-</div>
-</div>
-</li>
-<!-- User -->
-<li class="nav-item dropdown dropdown-user">
-<a class="nav-link" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-<img src="assets/dist/img/avatar5.png" class="rounded-circle" width="50" height="50" alt="user"></a>
-
-<div class="dropdown-menu drop_down" >
-<div class="menus">
-<a class="dropdown-item" href="#"><i class="fa fa-user"></i> User Profile</a>
-<a class="dropdown-item" href="#"><i class="fa fa-inbox"></i> Inbox</a>
-<a class="dropdown-item" href="#"><i class="fa fa-sign-out"></i> Signout</a>
-</div>
-</div>
-</li>
-</ul>
-</div>
-</nav>
-</header>
-<!-- =============================================== -->
-<!-- Left side column. contains the sidebar -->
-<aside class="main-sidebar">
-<!-- sidebar -->
-<div class="sidebar">
-<!-- sidebar menu -->
-<ul class="sidebar-menu">
-<li>
-<a href="index.php"><i class="fa fa-tachometer"></i><span>Dashboard</span>
-<span class="pull-right-container">
-</span>
-</a>
-</li>
-<li class="treeview">
-<a href="#">
-<i class="fa fa-users"></i><span>Client</span>
-<span class="pull-right-container">
-<i class="fa fa-angle-left float-right"></i>
-</span>
-</a>
-<ul class="treeview-menu">
-<li><a href="addclient.php">Add New Client</a></li>
-<li><a href="clientlist.php">Client List</a></li>
-<!-- <li><a href="group.html">Groups</a></li> -->
-</ul>
-</li>
-<li> 
-<a href="faculty.php">
-<i class="fa fa-user-circle"></i><span>Faculty</span>
-<span class="pull-right-container">
-</span>
-</a>
-</li>
-<li class="active">
-<a href="events.php">
-<i class="fa fa-tree"></i><span>Events</span>
-<span class="pull-right-container">
-</span>
-</a>
-</li>
-<li>
-<a href="document.php">
-<i class="fa fa-file-text"></i> <span>Documents</span>
-<span class="pull-right-container">
-</span>
-</a>
-</li>
-</ul>
-</div>
-<!-- /.sidebar -->
-</aside>
-<!-- =============================================== -->
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="container-fluid">
 <!-- Content Header (Page header) -->
 <section class="content-header">
 <div class="header-icon">
@@ -182,7 +69,7 @@
 <!-- Add Events  -->
 </div> 
 <div class="card-title custom_title">
-<h4>Event Types</h4>
+<h4>Events</h4>
 </div>
 </div>
 <div class="card-body">
@@ -194,19 +81,20 @@
 </div>
 </div>
 <div class="table-responsive">
-<table class="table table-bordered table-hover">
+<table id="dataTableExample1" class="table table-bordered table-hover">
 <thead class="back_table_color">
 <tr class="info">
-<th>Event ID</th>
 <th>Event Name</th>
-<th>Event Type</th>
-<th>Action</th>
+<th>Address</th>
+<th>Price</th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
             <?php
             require('dbconfig.php');
-            $sql = "Select evt_id, evt_name,evi_name  FROM eventtype,eventidentifier where eventtype.evi_idd = eventidentifier.evi_id ";
+            $sql = "Select event_id, description, address, price, event_type_id FROM event";
             $stmt = sqlsrv_query( $conn, $sql );
             if( $stmt === false) {
             die( print_r( sqlsrv_errors(), true) );
@@ -214,10 +102,11 @@
             while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
             echo 
             "<tr>
-            <td>".$row['evt_id']."</td>
-            <td>".$row['evt_name']."</td>
-            <td>".$row['evi_name']."</td>
-            <td><a href=\"delete_eventtype.php?evt_id=".$row['evt_id']."\" style='color:red'>Delete</a></td>
+            <td>".$row['description']."</td>
+            <td>".$row['address']."</td>
+            <td>".$row['price']."</td>
+            <td><a href=\"edit_event.php?event_id=".$row['event_id']."\" style='color:blue'>Update</a></td>
+            <td><a href=\"delete_event.php?event_id=".$row['event_id']."\" style='color:red'>Delete</a></td>
             </tr>" ; 
             }
             sqlsrv_free_stmt( $stmt);
@@ -255,15 +144,15 @@
 <tbody>
           <?php
           require('dbconfig.php');
-          $sql = "SELECT evi_id, evi_name FROM eventidentifier ";
+          $sql = "SELECT event_type_id, event_type FROM eventtype ";
           $stmt = sqlsrv_query( $conn, $sql );
           if( $stmt === false) {
           die( print_r( sqlsrv_errors(), true) );
           }
           while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
           echo "<tr>
-          <td>".$row['evi_id']."</td><td>".$row['evi_name']."</td>
-          <td><a href=\"delete_eventid.php?evi_id=".$row['evi_id']."\" style='color:red'>Delete</a></td>
+          <td>".$row['event_type_id']."</td><td>".$row['event_type']."</td>
+          <td><a href=\"delete_eventtype.php?event_type_id=".$row['event_type_id']."\" style='color:red'>Delete</a></td>
           </tr>" ;
           }
           sqlsrv_free_stmt( $stmt);
@@ -274,57 +163,7 @@
 </div>
 </div>
 </div>
-<div class="col-lg-12 pinpin">
-<div class="card lobicard"  data-sortable="true">
-<div class="card-header lobicard-custom-control">
-<div class="card-title custom_title">
-<h4>All Events</h4>
-</div>
-</div>
-<div class="card-body">
-  <!--============================================-->
-<!-- Add Events details  -->
-<div class="btn-group d-flex" role="group">
-<div class="buttonexport"> 
-<a href="#" class="btn btn-add" data-toggle="modal" data-target="#addevduser"><i class="fa fa-plus"></i> Add Event Details</a>  
-</div>
-</div>
-<div class="table-responsive">
-<table class="table table-bordered table-hover">
-<thead class="back_table_color">
-<tr class="info">
-<th>Events ID</th>
-<th>Events Name</th>
-<th>Location</th>
-<th>Dates</th>
-</tr>
-</thead>
-<tbody>
-        <?php
-        require('dbconfig.php');
-        $sql = "SELECT distinct evt_id, evt_name, place ,date FROM eventdetails, eventtype WHERE eventtype.evt_id = eventdetails.e_type group by evt_id,evt_name,notes,place,date";
-        $stmt = sqlsrv_query( $conn, $sql );
-        if( $stmt === false) {
-        die( print_r( sqlsrv_errors(), true) );
-        }
-        while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
-        $date = $row['date'];
-        $stringdate = $date->format('Y-m-d');
-        echo "
-        <tr onclick=\"window.location='eventsDetails.php?evt=".$row["evt_id"]."'\">
-        <td>".$row['evt_id']."</td>
-        <td>".$row['evt_name']."</td>
-        <td>".$row['place']."</td>
-        <td>".$stringdate."</td></tr>" ;
-        }
-        sqlsrv_free_stmt( $stmt);
-        ?>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
+
 <!--Add Event Modal -->
 <div class="modal fade" id="addevtuser" tabindex="-1" role="dialog" aria-hidden="true">
 <div class="modal-dialog">
@@ -341,20 +180,20 @@
 <!-- Text input-->
 <div class="col-md-6 form-group">
 <label>Event Name</label>
-<input type="text" class="form-control" name="evt_name" placeholder="Enter Event Name" required>
+<input type="text" class="form-control" name="description" placeholder="Enter Event Name" required>
 </div>
 <div class="col-md-6 form-group">
   <div class="input-group">
 <label for="inputGroupSelect">Event Identifier ID</label>
   </div>
-  <select class="form-control" name="evi_idd" id="inputGroupSelect">
+  <select class="form-control" name="event_type_id" id="inputGroupSelect">
     <option selected>--Select Event ID--</option>
      <?php
           require('dbconfig.php');
-          $sql = "SELECT * FROM eventidentifier"; 
+          $sql = "SELECT * FROM eventtype"; 
           $stmt = sqlsrv_query($conn, $sql );
           while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ){
-          echo "<option value='".$row['evi_id']."'>".$row['evi_name']."</option>";
+          echo "<option value='".$row['event_type_id']."'>".$row['event_type']."</option>";
           }
       ?>
   </select>
@@ -365,7 +204,15 @@
 </div>
 <div class="col-md-6 form-group">
 <label>Event Time</label>
-<input type="time" class="form-control" name="time" placeholder="Enter Event time" required>
+<input type="time" class="form-control" name="start_time" placeholder="Enter Event time" required>
+</div>
+<div class="col-md-6 form-group">
+<label>Event Address</label>
+<input type="text" class="form-control" name="address" placeholder="Enter Event Address" required>
+</div>
+<div class="col-md-6 form-group">
+<label>Event Price</label>
+<input type="text" class="form-control" name="price" placeholder="Enter Event Price" required>
 </div>
 <div class="col-md-12 form-group user-form-group">
 <div class="float-right">
@@ -385,6 +232,7 @@
 </div>
 </div>  
 <!-- /.Event Modal -->
+
 <!--Add Event identifier Modal -->
 <div class="modal fade" id="addeviuser" tabindex="-1" role="dialog" aria-hidden="true">
 <div class="modal-dialog">
@@ -401,7 +249,7 @@
 <!-- Text input-->
 <div class="col-md-6 form-group">
 <label>Event Identifier Name</label>
-<input type="text" class="form-control" name="evi_name" placeholder="Enter Event Identifier Name" required>
+<input type="text" class="form-control" name="event_type" placeholder="Enter Event Identifier Name" required>
 </div>
 <div class="col-md-12 form-group user-form-group">
 <div class="float-right">
@@ -421,6 +269,7 @@
 </div>
 </div>
 <!-- /.Event Modal -->
+
 <!--=============Add Event Details Modal ======================-->
 <div class="modal fade" id="addevduser" tabindex="-1" role="dialog" aria-hidden="true">
 <div class="modal-dialog">
@@ -513,10 +362,10 @@
 </section>
 <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
-<footer class="main-footer">
-<strong>Copyright &copy; 2019-2020 <a href="#">CRM Tool</a>.</strong> All rights reserved.
-</footer>
+<!-- footer -->
+<?php 
+    include 'assets/php/footer.php';
+?>
 </div>
 <!-- ./wrapper -->
 <!-- Start Core Plugins
@@ -553,6 +402,16 @@
 <script src="assets/dist/js/dashboard.js" ></script>
 <!-- End Theme label Script
 =====================================================================-->
+<script>
+        $(document).ready(function() {
+          $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#dataTableExample1 tbody tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+        </script>
 </body>
 </html>
 

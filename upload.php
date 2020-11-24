@@ -21,7 +21,7 @@ if (isset($_POST["submit"])){
 
 	 $stmt = sqlsrv_query( $conn, $sql );
 
-	echo '<script type="text/javascript">window.location.href = "document.php";</script>';
+	echo '<script type="text/javascript">window.location.href = "document";</script>';
 }
 
 ?>

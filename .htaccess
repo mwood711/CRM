@@ -1,0 +1,15 @@
+# mod_rewrite starts here
+
+RewriteEngine on
+
+# Does not apply to existing directories
+
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# If the file dont exist ignore rule (Check for file directory .html ext)
+
+RewriteCond %{REQUEST_FILENAME}\.php -f
+
+# Rule to show the page with the .html ext
+
+RewriteRule ^(.*)$ $1.php [NC,L]

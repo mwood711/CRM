@@ -1,34 +1,48 @@
 <?php
+
+//create values to reflect client informationn
 $fname = $_POST['fname'];
 $lname = $_POST['lname'];
 $title = $_POST['title'];
-$sname = $_POST['sname'];
-$cinfo = $_POST['cinfo'];
-$company = $_POST['company'];
-$officephone = $_POST['officephone'];
+$info = $_POST['info'];
+$phone = $_POST['phone'];
 $email = $_POST['email'];
 $address = $_POST['address'];
 $city = $_POST['city'];
 $state = $_POST['state'];
-$zipcode = $_POST['zipcode'];
-if ( !empty($fname) || !empty($lname) || !empty($title) || !empty($sname) || !empty($cinfo) || !empty($company) || !empty($officephone) || !empty($email)|| !empty($address)|| !empty($city)|| !empty($state)|| !empty($zipcode)) {
-    $serverName = "localhost\\SQLEXPRESS";
- //creating a connection to the SQL database
-    $connectionInfo = array( "Database"=>"ksu_crm");
+$zip = $_POST['zip'];
+$company_id = $_POST['company_id'];
+
+//***********************************************************************************************************************************
+//$contact_id = 36;
+//********note for henry: ask alex about the auto generator feature on sql********
+//***********************************************************************************************************************************
+
+
+
+if ( !empty($fname) || !empty($lname) || !empty($title) || !empty($info) ||  !empty($phone) || !empty($email)|| !empty($address)|| !empty($city)|| !empty($state)|| !empty($zip) || !empty($company_id)) {
+    $serverName = "localhost";
+
+ //creating a connection to the KSU CRM SQL database
+    $connectionInfo = array( "Database"=>"crm");
     $conn = sqlsrv_connect( $serverName, $connectionInfo);
     {
-     $INSERT = "INSERT Into contact (fname, lname, title, sname, cinfo, company, officephone, email, address, city, state, zipcode) VALUES('$fname', '$lname', '$title', '$sname', '$cinfo', '$company', '$officephone', '$email', '$address', '$city', '$state', '$zipcode')";
+    	//create new client and add to database tables
+     $INSERT = "INSERT Into contact (contact_id, fname, lname, title, info, phone, email, address, city, state, zip, company_id) VALUES('$contact_id', '$fname', '$lname', '$title', '$info', '$phone', '$email', '$address', '$city', '$state', '$zip', '$company_id')";
+
 //Prepare statement
       $stmt = sqlsrv_prepare($conn, $INSERT);
       sqlsrv_execute($stmt);
-      echo '<script type="text/javascript">window.location.href = "clientlist.php";</script>';
+      echo '<script type="text/javascript">window.location.href = "clientlist";</script>';
      } 
      sqlsrv_close($conn);
 
     }
+
  else {
- echo "All field are required";
+ echo "All fields are required";
 
  die();
 }
+//program end
 ?>
