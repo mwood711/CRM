@@ -85,8 +85,8 @@
 <thead class="back_table_color">
 <tr class="info">
 <th>Event Name</th>
-<th>Address</th>
-<th>Price</th>
+<th></th>
+<th></th>
 <th></th>
 <th></th>
 </tr>
@@ -101,10 +101,10 @@
             }
             while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
             echo 
-            "<tr>
+            "<tr onclick=\"window.location='eventsDetails?event_id=".$row["event_id"]."'\">
             <td>".$row['description']."</td>
-            <td>".$row['address']."</td>
-            <td>".$row['price']."</td>
+            <td><a href=\"facultyAtEvent.php?event_id=".$row['event_id']."\" style='color:green'>Faculty Attending</a></td>
+            <td><a href=\"contactsAtEvent.php?event_id=".$row['event_id']."\" style='color:blue'>Contacts Attending</a></td>
             <td><a href=\"edit_event.php?event_id=".$row['event_id']."\" style='color:blue'>Update</a></td>
             <td><a href=\"delete_event.php?event_id=".$row['event_id']."\" style='color:red'>Delete</a></td>
             </tr>" ; 

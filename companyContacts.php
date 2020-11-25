@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Company</title>
+<title>Company Contacts</title>
 <!-- Favicon and touch icons -->
 <link rel="shortcut icon" href="assets/dist/img/ico/ksu-favicon.png" type="image/x-icon">
 <!-- Start Global Mandatory Style
@@ -43,6 +43,12 @@
 <style>
   small a:hover{
     color: grey;
+  }
+
+  ul li button{
+    margin-left: 12px;
+    border: none;
+    background: none;
   }
 </style>
 
@@ -101,18 +107,18 @@
 <li class="dropdown-divider"></li>
 <li>
 <a href="#" onclick="$('#dataTableExample1').tableExport({type:'excel',escape:'false'});"> 
-<img src="assets/dist/img/xls.png" width="24" alt="logo"> XLS</a>
+<img src="assets/dist/img/excel.png" width="24" alt="logo"> Excel</a>
 </li>
-<li>
-<a href="#" onclick="$('#dataTableExample1').tableExport({type:'pdf',pdfFontSize:'7',escape:'false'});"> 
-<img src="assets/dist/img/pdf.png" width="24" alt="logo"> PDF</a>
-</li>
+  <li>
+      <button type="button" onclick="window.location='PDF-generate/generate-companyContacts-pdf.php?id=<?php echo $company_id; ?> '">
+      <img src="assets/dist/img/pdf.png" width="24" alt="logo"> PDF</button>
+   </li>
 </ul>
 </div>
 <!-- ./Plugin content:powerpoint,txt,pdf,png,word,xl -->
 <!-- =============================================== -->
 <div class="table-responsive">
-<table id="dataTableExample1" class="table table-bordered table-striped table-hover">
+<table class="table table-bordered table-striped table-hover">
 <thead class="back_table_color">
  <tr class="info">
    <th>First Name</th>
@@ -185,6 +191,49 @@
 </div>          
 </div>
 </div>
+
+<table id="dataTableExample1" style="visibility: hidden;">
+<thead>
+ <tr>
+   <th>First Name</th>
+   <th>Last Name</th>
+   <th>Title</th>
+   <th>Info</th>
+   <th>Phone</th>
+   <th>Email</th>
+   <th>Address</th>
+   <th>City</th>
+   <th>State</th>
+   <th>Zip</th>
+   </tr>
+   </thead>
+   <tbody>
+   <?php
+         require('dbconfig.php');
+         $sql = "SELECT * FROM Contact where company_id='".$company_id."'";
+         $stmt = sqlsrv_query( $conn, $sql );
+         if( $stmt === false) {
+         die( print_r( sqlsrv_errors(), true) );
+         }
+         while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+         echo "<tr onclick=\"window.location='ClientDetails?custid=".$row["contact_id"]."'\">
+         <td>".$row['fname']."</td>
+         <td>".$row['lname']."</td>
+         <td>".$row['title']."</td>
+         <td>".$row['info']."</td>
+         <td>".$row['phone']."</td>
+         <td>".$row['email']."</td>
+         <td>".$row['address']."</td>
+         <td>".$row['city']."</td>
+         <td>".$row['state']."</td>
+         <td>".$row['zip']."</td>
+         
+         </tr>";
+         }
+         sqlsrv_free_stmt( $stmt);
+   ?>
+</tbody>
+</table>
 
 </div>
 <!-- ./wrapper -->

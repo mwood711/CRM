@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-<title>Event Details</title>
+<title>Contacts At Event</title>
 <!-- Favicon and touch icons -->
 <link rel="shortcut icon" href="assets/dist/img/ico/ksu-favicon.png" type="image/x-icon">
 <!-- Start Global Mandatory Style
@@ -51,13 +51,34 @@
       include 'assets/php/top-nav.php';
 ?>
 <div>
+  <?php
+
+        $event_id = $_GET['event_id'];
+
+        require ('dbconfig.php');
+        
+        $sql = "SELECT description 
+                FROM event WHERE event_id = '".$event_id."'";
+        $stmt = sqlsrv_query( $conn, $sql );
+        if( $stmt === false) {
+        die( print_r( sqlsrv_errors(), true) );
+        }
+
+        while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+
+            $description = $row['description'];
+
+        }
+        sqlsrv_free_stmt( $stmt);
+
+     ?>
 
 <div class="container-fluid">
 <!-- Content Header (Page header) -->
 <section class="content-header">
 <div class="header-icon"><i class="fa fa-user-circle-o"></i></div>
 <div class="header-title">
-<h1>Event Details</h1>
+<h1>Contacts Attending  <button class="ml-3 btn btn-success btn-sm" onclick="window.location='addContactAtEvent.php?event_id=<?php echo $event_id; ?> '">Add Contact</button></h1>
 <small><a href="events">Back to List</a></small>
 </div>
 </section>
@@ -68,18 +89,29 @@
 <div class="card lobicard"  data-sortable="true">
 <div class="card-header lobicard-custom-control">
 <div class="card-title custom_title">
-    <h4>Event Information</h4>
+    <h4><?php echo $description; ?></h4>
 </div>
 </div>
 <div class="card-body">
 <div class="table-responsive">
 <table class="table table-bordered table-hover">
+<thead class="back_table_color">
+   <tr class="info">
+   <th>First Name</th>
+   <th>Last Name</th>
+   <th>Company</th>
+   <th></th>
+
+</thead>
 <tbody>
         <?php
          require ('dbconfig.php');
-        $event_id = $_GET['event_id'];
+        
         $sql = "SELECT * 
-                FROM event INNER JOIN EventType ON event.event_type_id = EventType.event_type_id 
+                FROM Event
+                INNER JOIN ContactAtEvent ON ContactAtEvent.event_id = Event.event_id
+                INNER JOIN Contact ON ContactAtEvent.contact_id = Contact.contact_id 
+                INNER JOIN Company ON Company.company_id = Contact.company_id 
                 WHERE event.event_id = '".$event_id."'";
         $stmt = sqlsrv_query( $conn, $sql );
         if( $stmt === false) {
@@ -88,20 +120,15 @@
 
         while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
 
-
-            $stringdate = $row['date'];
-            $date = $stringdate->format('m-d-y');
-
-            $startTimeString = $row['start_time'];
-            $startTime = $startTimeString->format('g:i A');
-
         echo 
         "
-        <tr><th>Event Description :</th><td>".$row['description']."</td></tr>
-        <tr><th>Date :</th><td>".$date."</td></tr>
-        <tr><th>Start Time :</th><td>".$startTime."</td></tr>
-        <tr><th>Address :</th><td>".$row['address']."</td></tr>
-        <tr><th>Price :</th><td>$".$row['price']."</td></tr>
+        <tr>
+        <td>".$row['fname']."</td>
+        <td>".$row['lname']."</td>
+        <td>".$row['company_name']."</td>
+        <td><a href=\"deleteContactAtEventQuery.php?contact_event_id=".$row['contact_event_id']."\" style='color:red'>Delete</a></td>
+        </tr>
+        
        ";
         }
         sqlsrv_free_stmt( $stmt);
@@ -155,4 +182,3 @@
 =====================================================================-->
 </body>
 </html>
-

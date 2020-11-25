@@ -140,15 +140,32 @@
 <div class="modal-body">
 <div class="row">
 <div class="col-md-12">
-<form class="form-horizontal" action="AddCom.php" method="POST">
+<form class="form-horizontal" action="addCompanyQuery.php" method="POST">
 <div class="row">
 <div class="col-md-6 form-group">
 <label>Company Name</label>
 <input type="text" class="form-control" name="company_name" placeholder="Enter Company Name" required>
 </div>
+<?php 
+
+    require('dbconfig.php');
+    $sql = "SELECT TOP 1 * FROM company ORDER BY company_id DESC";
+    $stmt = sqlsrv_query( $conn, $sql );
+    if( $stmt === false) {
+    die( print_r( sqlsrv_errors(), true) );
+    }
+    while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+
+        $company_id = $row['company_id'] + 1;
+
+    }
+    sqlsrv_free_stmt( $stmt);
+
+ ?>
+<input type="hidden" name="company_id" value="<?php echo $company_id ?>"/>
 <div class="col-md-12 form-group user-form-group">
 <div class="float-right">
-<button type="submit" class="btn btn-add btn-sm" name="submit" value="Add">Submit</button>
+<button type="submit" class="btn btn-success btn-sm" name="submit" value="Add">Add</button>
 <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
 </div>
 </div>
