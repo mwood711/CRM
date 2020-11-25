@@ -52,7 +52,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
 <div class="header-icon">
-<i class="fa fa-user-plus"></i>
+<i class="fa fa-building" aria-hidden="true"></i>
 </div>
 <div class="header-title">
 <h1>Company</h1>
@@ -66,7 +66,7 @@
 <div class="card lobicard" id="lobicard-custom-control" data-sortable="true">
 <div class="card-header">
 <div class="card-title custom_title">
-<h4>Details</h4>
+<h4></h4>
 </div>
 </div>
 <!-- =============================================== -->
@@ -83,23 +83,24 @@
 <li class="dropdown-divider"></li>
 <li>
 <a href="#" onclick="$('#dataTableExample1').tableExport({type:'excel',escape:'false'});"> 
-<img src="assets/dist/img/xls.png" width="24" alt="logo"> XLS</a>
+<img src="assets/dist/img/excel.png" width="24" alt="logo"> Excel</a>
 </li>
-<li>
-<a href="#" onclick="$('#dataTableExample1').tableExport({type:'pdf',pdfFontSize:'7',escape:'false'});"> 
-<img src="assets/dist/img/pdf.png" width="24" alt="logo"> PDF</a>
-</li>
+  <li>
+      <a href="PDF-generate/generate-company-pdf.php" > 
+      <img src="assets/dist/img/pdf.png" width="24" alt="logo"> PDF</a>
+   </li>
 </ul>
 </div>
 <!-- ./Plugin content:powerpoint,txt,pdf,png,word,xl -->
 <!-- =============================================== -->
 <div class="table-responsive">
-<table id="dataTableExample1" class="table table-bordered table-striped table-hover">
+<table class="table table-bordered table-striped table-hover">
 <thead class="back_table_color">
  <tr class="info">
-   <th>Company ID</th>
    <th>Company Name</th>
-   <th>Action</th>
+   <th></th>
+   <th></th>
+   <th></th>
    </tr>
    </thead>
    <tbody>
@@ -112,8 +113,9 @@
          }
          while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
          echo "<tr>
-         <td>".$row['company_id']."</td>
          <td>".$row['company_name']."</td>
+         <td><a href=\"companyContacts.php?company_id=".$row['company_id']."\" style='color:green'>View Contacts</a></td>
+         <td><a href=\"editCompany.php?company_id=".$row['company_id']."\" style='color:blue'>Update</a></td>
          <td><a href=\"delete_com.php?company_id=".$row['company_id']."\" style='color:red'>Delete</a></td>
          </tr>";
          }
@@ -160,6 +162,30 @@
 </div>          
 </div>
 </div>
+
+<table id="dataTableExample1" style="visibility: hidden">
+<thead>
+ <tr>
+   <th>Company Name</th>
+   </tr>
+   </thead>
+   <tbody>
+   <?php
+         require('dbconfig.php');
+         $sql = "SELECT company_name FROM company";
+         $stmt = sqlsrv_query( $conn, $sql );
+         if( $stmt === false) {
+         die( print_r( sqlsrv_errors(), true) );
+         }
+         while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+         echo "<tr>
+         <td>".$row['company_name']."</td>
+         </tr>";
+         }
+         sqlsrv_free_stmt( $stmt);
+   ?>
+</tbody>
+</table>
 <!-- footer -->
 <?php 
     include 'assets/php/footer.php';

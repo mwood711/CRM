@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Edit Event</title>
+<title>Edit Company</title>
 <!-- Favicon and touch icons -->
 <link rel="shortcut icon" href="assets/dist/img/ico/ksu-favicon.png" type="image/x-icon">
 <!-- Start Global Mandatory Style
@@ -52,23 +52,14 @@
 <?php
           require('dbconfig.php');
 
-          $id =$_REQUEST['event_id'];
-          $sql = "SELECT * FROM event where event_id='".$id."'"; 
+          $company_id =$_REQUEST['company_id'];
+          $sql = "SELECT * FROM Company where company_id='".$company_id."'"; 
           $stmt = sqlsrv_query($conn, $sql );
           while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ){
           
-            $description = $row['description'];
-
-            $stringdate = $row['date'];
-            $date = $stringdate->format('m-d-y');
-
-            $startTimeString = $row['start_time'];
-            $startTime = $startTimeString->format('g:i A');
-
-            $address = $row['address'];
-            $price = $row['price'];
-            $eventTypeId = $row['event_type_id'];
+            $company_name = $row['company_name'];
           }
+
 ?>
 
 <style>
@@ -93,11 +84,11 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
 <div class="header-icon">
-<i class="fa fa-users"></i>
+<i class="fa fa-building" aria-hidden="true"></i>
 </div>
 <div class="header-title">
-<h1>Edit Event</h1>
-<small></small>
+<h1>Edit <?php echo $company_name ?></h1>
+<small><a href="company">Back to List</a></small>
 </div>
 </section>
 <!-- Main content -->
@@ -107,59 +98,15 @@
 <div class="col-sm-12">
 <div class="card lobicard all_btn_card" id="lobicard-custom-control1" data-sortable="true">
 <div class="card-header all_card_btn">
-<div class="card-title custom_title">
-<a class="btn btn-add" href="events"><i class="fa fa-list"></i> Event List </a>  
-</div>
+
 </div>
 <div class="card-body">
-<form class="col-sm-6" action="editEventQuery.php" method="POST">
+<form class="col-sm-6" action="editCompanyQuery.php" method="POST">
 <div class="form-group">
-<label>Event Description</label>
-<input type="text" class="form-control" value="<?php echo $description ?>" name="description" placeholder="Enter Event Description" require>
+<label>Company Name</label>
+<input type="text" class="form-control" value="<?php echo $company_name ?>" name="company_name" require>
 </div>
-<div class="form-group">
-<label>Date</label>
-<input id="datepicker" class="form-control" value="<?php echo $date ?>" name="date" placeholder="Enter Date" required>
-</div>
-<div class="form-group">
-<label>Start Time</label>
-<input id="timepick" class="form-control" value="<?php echo $startTime ?>" name="startTime" placeholder="Enter Start Time" required>
-</div>
-<div class="form-group">
-<label>Address</label>
-<input type="text" class="form-control" value="<?php echo $address ?>" name="address" placeholder="Enter Address" required>
-</div>
-<div class="form-group">
-<label>Price</label>
-<input type="text" class="form-control" value="<?php echo $price ?>" name="price" placeholder="Enter Price" required>
-</div>
-
-<div class="form-group">
-<label>Event Types</label>
-<select class="form-control" name="event_type_id" id="inputGroupSelect">
-
-     <?php
-          require('dbconfig.php');
-          $sql = "SELECT * FROM EventType"; 
-          $stmt = sqlsrv_query($conn, $sql );
-          while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ){
-
-            if ($eventTypeId === $row['event_type_id']){
-              echo "<option selected value='".$row['event_type_id']."'>".$row['event_type']."</option>";
-            }
-            else{
-              echo "<option value='".$row['event_type_id']."'>".$row['event_type']."</option>";
-
-            }
-          
-          }
-
-      ?>
-  </select>
-
-</div>
-
-<input type="hidden" name="id" value="<?php echo $id ?>"/>
+<input type="hidden" name="company_id" value="<?php echo $company_id ?>"/>
 <div class="submit-button">                           
 <a> <input class="btn btn-success" type="submit" name="submit" value="Edit"></a>
 </div>
@@ -170,12 +117,6 @@
 </div>
 </div>
 <!-- /.content -->
-</div>
-
-<!-- footer -->
-<?php 
-    include 'assets/php/footer.php';
-?>
 </div>
 <!-- ./wrapper -->
 <!-- Start Core Plugins
@@ -215,12 +156,5 @@
 <!-- End Theme label Script
 =====================================================================-->
 
-<script type="text/javascript">
-   $(function () {
-        $("#datepicker").datepicker({ minDate: 1, maxDate: "+1Y" });
-        $("#timepicker").timepicker({ 'minTime': '7:00 AM', 'maxTime': '11:00 PM', step: '30' });
-        $("#timepick").timepicker({ 'minTime': '7:00 AM', 'maxTime': '11:00 PM', step: '30' });
-    });
-</script>
 </body>
 </html>

@@ -121,7 +121,7 @@
 <div class="card lobicard"  data-sortable="true">
 <div class="card-header lobicard-custom-control">
 <div class="card-title custom_title">
-<h4>Event Identifier</h4>
+<h4>Event Types</h4>
 </div>
 </div>
 <div class="card-body">
@@ -129,16 +129,16 @@
 <!-- Add Events identifier -->
 <div class="btn-group d-flex" role="group">
 <div class="buttonexport"> 
-<a href="#" class="btn btn-add" data-toggle="modal" data-target="#addeviuser"><i class="fa fa-plus"></i> Add New Identifier</a>  
+<a href="#" class="btn btn-add" data-toggle="modal" data-target="#addEventType"><i class="fa fa-plus"></i> Add New Type</a>  
 </div>
 </div>
 <div class="table-responsive">
 <table class="table table-bordered table-hover">
 <thead class="back_table_color">
 <tr class="info">
-<th>Event Identifier ID</th>
-<th>Event Identifier Name</th>
-<th>Action</th>
+<th>Event Type</th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
@@ -151,7 +151,8 @@
           }
           while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
           echo "<tr>
-          <td>".$row['event_type_id']."</td><td>".$row['event_type']."</td>
+          <td>".$row['event_type']."</td>
+          <td><a href=\"editEventType.php?event_type_id=".$row['event_type_id']."\" style='color:blue'>Update</a></td>
           <td><a href=\"delete_eventtype.php?event_type_id=".$row['event_type_id']."\" style='color:red'>Delete</a></td>
           </tr>" ;
           }
@@ -175,7 +176,7 @@
 <div class="modal-body">
 <div class="row">
 <div class="col-md-12">
-<form class="form-horizontal" action="AddEvent.php" method="POST">
+<form class="form-horizontal" action="addEventQuery.php" method="POST">
 <div class="row">
 <!-- Text input-->
 <div class="col-md-6 form-group">
@@ -184,7 +185,7 @@
 </div>
 <div class="col-md-6 form-group">
   <div class="input-group">
-<label for="inputGroupSelect">Event Identifier ID</label>
+<label for="inputGroupSelect">Event Type</label>
   </div>
   <select class="form-control" name="event_type_id" id="inputGroupSelect">
     <option selected>--Select Event ID--</option>
@@ -214,15 +215,32 @@
 <label>Event Price</label>
 <input type="text" class="form-control" name="price" placeholder="Enter Event Price" required>
 </div>
+
+<?php 
+
+    require('dbconfig.php');
+    $sql = "SELECT TOP 1 * FROM event ORDER BY event_id DESC";
+    $stmt = sqlsrv_query( $conn, $sql );
+    if( $stmt === false) {
+    die( print_r( sqlsrv_errors(), true) );
+    }
+    while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+
+        $id = $row['event_id'] + 1;
+
+    }
+    sqlsrv_free_stmt( $stmt);
+
+ ?>
+<input type="hidden" name="event_id" value="<?php echo $id ?>"/>
+
+
 <div class="col-md-12 form-group user-form-group">
 <div class="float-right">
-<button type="button" class="btn btn-danger btn-sm">Cancel</button>
-<button type="submit" class="btn btn-add btn-sm" name="submit" value="Add">Update</button>
+<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+<button type="submit" class="btn btn-success" name="submit" value="Add">Create</button>
 </div>
 </div>
-</div>
-<div class="modal-footer">
-<button type="button" class="btn btn-danger float-left" data-dismiss="modal">Close</button>
 </div>
 </form>
 </div>
@@ -231,35 +249,55 @@
 </div>
 </div>
 </div>  
-<!-- /.Event Modal -->
 
-<!--Add Event identifier Modal -->
-<div class="modal fade" id="addeviuser" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+<!-- Create Event Type -->
+
+
+<div class="modal fade" id="addEventType" tabindex="-1" role="dialog" aria-hidden="true">
 <div class="modal-dialog">
 <div class="modal-content">
 <div class="modal-header modal-header-primary">
-<h3><i class="fa fa-plus m-r-5"></i> Add New Identifier</h3>
+<h3><i class="fa fa-plus m-r-5"></i> Add New Event Type</h3>
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 </div>
 <div class="modal-body">
 <div class="row">
 <div class="col-md-12">
-<form class="form-horizontal" action="AddEvtID.php" method="POST">
+<form class="form-horizontal" action="addEventTypeQuery.php" method="POST">
 <div class="row">
 <!-- Text input-->
 <div class="col-md-6 form-group">
-<label>Event Identifier Name</label>
-<input type="text" class="form-control" name="event_type" placeholder="Enter Event Identifier Name" required>
+<label>Event Type</label>
+<input type="text" class="form-control" name="event_type" placeholder="Enter Event Type" required>
 </div>
+
+<?php 
+
+    require('dbconfig.php');
+    $sql = "SELECT TOP 1 * FROM EventType ORDER BY event_type_id DESC";
+    $stmt = sqlsrv_query( $conn, $sql );
+    if( $stmt === false) {
+    die( print_r( sqlsrv_errors(), true) );
+    }
+    while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+
+        $id = $row['event_type_id'] + 1;
+
+    }
+    sqlsrv_free_stmt( $stmt);
+
+ ?>
+<input type="hidden" name="event_type_id" value="<?php echo $id ?>"/>
+
+
 <div class="col-md-12 form-group user-form-group">
 <div class="float-right">
-<button type="button" class="btn btn-danger btn-sm">Cancel</button>
-<button type="submit" class="btn btn-add btn-sm" name="submit" value="Add">Update</button>
+<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+<button type="submit" class="btn btn-success" name="submit" value="Add">Create</button>
 </div>
 </div>
-</div>
-<div class="modal-footer">
-<button type="button" class="btn btn-danger float-left" data-dismiss="modal">Close</button>
 </div>
 </form>
 </div>
@@ -267,7 +305,9 @@
 </div>
 </div>
 </div>
-</div>
+</div> 
+
+
 <!-- /.Event Modal -->
 
 <!--=============Add Event Details Modal ======================-->
@@ -362,10 +402,7 @@
 </section>
 <!-- /.content -->
 </div>
-<!-- footer -->
-<?php 
-    include 'assets/php/footer.php';
-?>
+
 </div>
 <!-- ./wrapper -->
 <!-- Start Core Plugins

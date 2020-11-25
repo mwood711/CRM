@@ -34,6 +34,9 @@
                         <a class="ref" style="color: black;font-family: 'Roboto', sans-serif; "  href="clientlist">Contacts</a>
                     </li>
                     <li class="nav-item">
+                        <a class="ref" style="color: black;font-family: 'Roboto', sans-serif; "  href="company">Companies</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="ref" style="color: black;font-family: 'Roboto', sans-serif; "  href="faculty">Faculty</a>
                     </li>
                     <li class="nav-item">
@@ -42,9 +45,7 @@
                       <li class="nav-item">
                         <a class="ref" style="color: black;font-family: 'Roboto', sans-serif; "  href="calender">Calendar</a>
                     </li>
-                      <li class="nav-item">
-                        <a class="ref" style="color: black;font-family: 'Roboto', sans-serif; "  href="faculty">Exports</a>
-                    </li>             
+                                 
                      
                 </ul>
                 <div style="float: right; padding-right: 10px;">
