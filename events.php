@@ -80,6 +80,20 @@
 <a href="#" class="btn btn-add" data-toggle="modal" data-target="#addevtuser"><i class="fa fa-plus"></i> Add New Event</a>  
 </div>
 </div>
+<div class="btn-group">
+<button class="btn btn-exp btn-sm" data-toggle="dropdown"><i class="fa fa-bars"></i> Export Table Data</button>
+<ul class="dropdown-menu exp-drop" role="menu">
+<li class="dropdown-divider"></li>
+<li>
+   <a href="#" onclick="$('#excelTable').tableExport({type:'excel',escape:'false'});"> 
+   <img src="assets/dist/img/excel.png" width="24" alt="logo"> Excel</a>
+   </li>
+<li>
+<a href="PDF-generate/generate-events-pdf.php" > 
+<img src="assets/dist/img/pdf.png" width="24" alt="logo"> PDF</a>
+</li>
+</ul>
+</div>
 <div class="table-responsive">
 <table id="dataTableExample1" class="table table-bordered table-hover">
 <thead class="back_table_color">
@@ -400,6 +414,53 @@
 <!-- /.Event details Modal -->
 <!--Add Event Modal -->
 </section>
+
+<table id="excelTable" style="visibility:hidden">
+  <thead>
+  <tr>
+  <th>Event Description</th>
+  <th>Date</th>
+  <th>Start Time</th>
+  <th>Address</th>
+  <th>Price</th>
+  <th>Event Type</th>
+  </tr>
+  </thead>
+  <tbody>
+          <?php
+          require('dbconfig.php');
+
+
+          $sql = "SELECT * FROM Event INNER JOIN EventType ON Event.event_type_id = EventType.Event_type_id";
+          $stmt = sqlsrv_query( $conn, $sql );
+          if( $stmt === false) {
+          die( print_r( sqlsrv_errors(), true) );
+          }
+
+          while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+
+
+                  $stringdate = $row['date'];
+                  $date = $stringdate->format('m-d-y');
+
+                  $startTimeString = $row['start_time'];
+                  $startTime = $startTimeString->format('g:i A');
+
+          echo "<tr>
+
+                  <td>".$row['description']."</td>
+                  <td>".$date."</td>
+                  <td>".$startTime."</td>
+                  <td>".$row['address']."</td>
+                  <td>".$row['price']."</td>
+                  <td>".$row['event_type']."</td>
+                  </tr>" ;
+          }
+          sqlsrv_free_stmt( $stmt);
+          ?>
+  </tbody>
+  
+</table>
 <!-- /.content -->
 </div>
 
@@ -431,6 +492,13 @@
 <script src="assets/plugins/fastclick/fastclick.min.js" ></script>
 <!-- CRMadmin frame -->
 <script src="assets/dist/js/custom.js" ></script>
+<!-- table-export js -->
+<script src="assets/plugins/table-export/tableExport.js" ></script>
+<script src="assets/plugins/table-export/jquery.base64.js" ></script>
+<script src="assets/plugins/table-export/html2canvas.js" ></script>
+<script src="assets/plugins/table-export/sprintf.js" ></script>
+<script src="assets/plugins/table-export/jspdf.js" ></script>
+<script src="assets/plugins/table-export/base64.js" ></script>
 <!-- End Core Plugins
 =====================================================================-->
 <!-- Start Theme label Script
@@ -443,12 +511,12 @@
         $(document).ready(function() {
           $("#myInput").on("keyup", function() {
             var value = $(this).val().toLowerCase();
-            $("#dataTableExample1 tbody tr").filter(function() {
+            $("#excelTable tbody tr").filter(function() {
               $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
           });
         });
-        </script>
+</script>
 </body>
 </html>
 

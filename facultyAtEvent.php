@@ -42,6 +42,17 @@
 <style>
     small a { color:    #008B8B; }
     small a:hover { color: grey; };
+
+  small a:hover{
+    color: grey;
+  }
+
+  ul li button{
+    margin-left: 12px;
+    border: none;
+    background: none;
+  }
+
 </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -92,6 +103,20 @@
     <h4><?php echo $description; ?></h4>
 </div>
 </div>
+<div class="btn-group ml-3 mt-3">
+<button class="btn btn-exp btn-sm" data-toggle="dropdown"><i class="fa fa-bars"></i> Export Table Data</button>
+<ul class="dropdown-menu exp-drop" role="menu">
+<li class="dropdown-divider"></li>
+<li>
+   <a href="#" onclick="$('#excelTable').tableExport({type:'excel',escape:'false'});"> 
+   <img src="assets/dist/img/excel.png" width="24" alt="logo"> Excel</a>
+</li>
+ <li>
+      <button type="button" onclick="window.location='PDF-generate/generate-facultyAtEvent-pdf.php?event_id=<?php echo $event_id; ?> '">
+      <img src="assets/dist/img/pdf.png" width="24" alt="logo"> PDF</button>
+</li>
+</ul>
+</div>
 <div class="card-body">
 <div class="table-responsive">
 <table class="table table-bordered table-hover">
@@ -99,7 +124,7 @@
    <tr class="info">
    <th>First Name</th>
    <th>Last Name</th>
-   <th>Email</th>
+   <th></th>
 </thead>
 <tbody>
         <?php
@@ -119,10 +144,10 @@
 
         echo 
         "
-        <tr>
+        <tr onclick=\"window.location='facultydetails?faculty_id=".$row["faculty_id"]."'\">
         <td>".$row['fname']."</td>
         <td>".$row['lname']."</td>
-        <td>".$row['email']."</td>
+        <td><a href=\"deleteFacultyAtEventQuery.php?faculty_event_id=".$row['faculty_event_id']."\" style='color:red'>Delete</a></td>
         </tr>
         
        ";
@@ -137,6 +162,50 @@
 </div>
 </div>
 </section>
+
+<table id="excelTable" style="visibility:hidden">
+  <thead>
+  <tr>
+  <th>First Name</th>
+  <th>Last Name</th>
+  <th>Email</th>
+  <th>Phone</th>
+  <th>Event</th>
+  </tr>
+  </thead>
+  <tbody>
+          <?php
+          require('dbconfig.php');
+
+
+          $sql = "SELECT * 
+                FROM Event
+                INNER JOIN FacultyAtEvent ON FacultyAtEvent.event_id = Event.event_id
+                INNER JOIN Faculty ON FacultyAtEvent.faculty_id = Faculty.faculty_id 
+                WHERE event.event_id = '".$event_id."'";
+          $stmt = sqlsrv_query( $conn, $sql );
+          if( $stmt === false) {
+          die( print_r( sqlsrv_errors(), true) );
+          }
+
+          while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+
+
+          echo "<tr>
+
+                  <td>".$row['fname']."</td>
+                  <td>".$row['lname']."</td>
+                  <td>".$row['email']."</td>
+                  <td>".$row['phone']."</td>
+                  <td>".$row['description']."</td>
+          
+                  </tr>" ;
+          }
+          sqlsrv_free_stmt( $stmt);
+          ?>
+  </tbody>
+  
+</table>
 
 <!-- /.content -->
 </div>
@@ -168,6 +237,13 @@
 <script src="assets/plugins/fastclick/fastclick.min.js" ></script>
 <!-- CRMadmin frame -->
 <script src="assets/dist/js/custom.js" ></script>
+<!-- table-export js -->
+<script src="assets/plugins/table-export/tableExport.js" ></script>
+<script src="assets/plugins/table-export/jquery.base64.js" ></script>
+<script src="assets/plugins/table-export/html2canvas.js" ></script>
+<script src="assets/plugins/table-export/sprintf.js" ></script>
+<script src="assets/plugins/table-export/jspdf.js" ></script>
+<script src="assets/plugins/table-export/base64.js" ></script>
 <!-- End Core Plugins
 =====================================================================-->
 <!-- Start Theme label Script
@@ -176,5 +252,16 @@
 <script src="assets/dist/js/dashboard.js" ></script>
 <!-- End Theme label Script
 =====================================================================-->
+
+<script>
+        $(document).ready(function() {
+          $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#excelTable tbody tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+</script>
 </body>
 </html>

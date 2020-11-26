@@ -134,11 +134,19 @@
     if( $stmt === false) {
     die( print_r( sqlsrv_errors(), true) );
     }
-    while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+    $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC);
+    $x = 1;
 
-        $faculty_event_id = $row['faculty_event_id'] + 1;
+    if (empty($row)){
 
-    }
+      $faculty_event_id = 1;      
+
+    } 
+      while($x < 2) {
+
+            $faculty_event_id = $row['faculty_event_id'] + 1;
+            ++$x;
+      }
     sqlsrv_free_stmt( $stmt);
 
  ?>

@@ -1,11 +1,16 @@
 <?php 
 
+$event_id = $_POST['event_id'];
+$description = $_POST['description'];
+$date = $_POST['date'];
+$startTime = $_POST['startTime'];
+$address = $_POST['address'];
+$price = $_POST['price'];
 $event_type_id = $_POST['event_type_id'];
-$event_type = $_POST['event_type'];
 
 
 require_once 'dbconfig.php';
-$sql = "update EventType set event_type='".$event_type."' where event_type_id='".$event_type_id."'";
+$sql = "update Event set description='".$description."', date='".$date."', start_time='".$startTime."', address='".$address."', price='".$price."', event_type_id='".$event_type_id."' where event_id='".$event_id."'";
 
 $stmt = sqlsrv_query( $conn, $sql );
 if( $stmt === false) {

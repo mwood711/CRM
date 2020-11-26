@@ -112,7 +112,7 @@
   <li>
       <button type="button" onclick="window.location='PDF-generate/generate-companyContacts-pdf.php?id=<?php echo $company_id; ?> '">
       <img src="assets/dist/img/pdf.png" width="24" alt="logo"> PDF</button>
-   </li>
+</li>
 </ul>
 </div>
 <!-- ./Plugin content:powerpoint,txt,pdf,png,word,xl -->

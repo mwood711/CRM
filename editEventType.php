@@ -103,7 +103,7 @@
 </div>
 </div>
 <div class="card-body">
-<form class="col-sm-6" action="editEventQuery.php" method="POST">
+<form class="col-sm-6" action="editEventTypeQuery.php" method="POST">
 <div class="form-group">
 <label>Event Type</label>
 <input type="text" class="form-control" value="<?php echo $event_type ?>" name="event_type" placeholder="Enter Event Type" require>

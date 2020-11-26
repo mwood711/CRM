@@ -144,13 +144,10 @@
           $stmt = sqlsrv_query($conn, $sql );
           while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ){
 
-            if ($eventTypeId === $row['event_type_id']){
-              echo "<option selected value='".$row['event_type_id']."'>".$row['event_type']."</option>";
-            }
-            else{
+           
               echo "<option value='".$row['event_type_id']."'>".$row['event_type']."</option>";
 
-            }
+    
           
           }
 
@@ -159,7 +156,7 @@
 
 </div>
 
-<input type="hidden" name="id" value="<?php echo $id ?>"/>
+<input type="hidden" name="event_id" value="<?php echo $id ?>"/>
 <div class="submit-button">                           
 <a> <input class="btn btn-success" type="submit" name="submit" value="Edit"></a>
 </div>

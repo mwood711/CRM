@@ -123,10 +123,8 @@
 
       ?>
   </select>
-
 </div>
-
-<?php 
+  <?php 
 
     require('dbconfig.php');
     $sql = "SELECT TOP 1 * FROM ContactAtEvent ORDER BY contact_event_id DESC";
@@ -134,17 +132,30 @@
     if( $stmt === false) {
     die( print_r( sqlsrv_errors(), true) );
     }
-    while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
 
-        $contact_event_id = $row['contact_event_id'] + 1;
+    $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC);
+    $x = 1;
 
-    }
+    if (empty($row)){
+
+      $contact_event_id = 1;
+
+    } 
+      while($x < 2) {
+
+            $contact_event_id = $row['contact_event_id'] + 1;
+            ++$x;
+      }
+
+  
+    
     sqlsrv_free_stmt( $stmt);
 
  ?>
 
-<input type="hidden" name="event_id" value="<?php echo $event_id; ?>"/>
-<input type="hidden" name="contact_event_id" value="<?php echo $contact_event_id; ?>"/>
+
+<input type="hidden" name="event_id" value="<?php echo $event_id ?>"/>
+<input type="hidden" name="contact_event_id" value="<?php echo $contact_event_id ?>"/>
 <div class="submit-button">                           
 <a> <input class="btn btn-success" type="submit" name="submit" value="Edit"></a>
 </div>
