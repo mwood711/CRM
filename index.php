@@ -1,7 +1,19 @@
 <?php 
 
     session_start();
-    if ($_SESSION['role'] != 'user' && $_SESSION['role'] != 'admin')
+    $id = $_SESSION['id'];
+     require('dbconfig.php');
+     $sql = "SELECT role FROM Login where id = '".$id."'";
+     $stmt = sqlsrv_query( $conn, $sql );
+     if( $stmt === false) {
+     die( print_r( sqlsrv_errors(), true) );
+     }
+     while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+        
+        $role = $row['role'];
+     }
+     sqlsrv_free_stmt( $stmt);
+    if ($role != 'user' && $role != 'admin')
     {
         header('location:login2.php');
     }
@@ -286,14 +298,14 @@
         if( $conn === false ) {
         die( print_r( sqlsrv_errors(), true));
         } 
-        $sql = "Select top 5 * from ContactLog order by date " ;
+        $sql = "SELECT top 5 * FROM Contact inner join ContactLog on contact.contact_id = contactlog.contact_id order by contactlog.contactDate desc";
         $stmt = sqlsrv_query( $conn, $sql );
         if( $stmt === false) {
         die( print_r( sqlsrv_errors(), true) );
         }
         while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
          
-         $date = $row['date'];
+        $date = $row['contactDate'];
         $stringdate = $date->format('m-d-y');
         echo 
         "<tr>

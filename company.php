@@ -39,6 +39,14 @@
 <!--<link href="assets/dist/css/stylecrm-rtl.css" rel="stylesheet" />-->
 <!-- End Theme Layout Style
 =====================================================================-->
+<?php 
+
+    session_start();
+    if ($_SESSION['role'] != 'user' && $_SESSION['role'] != 'admin')
+    {
+        header('location:login2.php');
+    }
+?>
 </head>
 <body class="hold-transition sidebar-mini">
 

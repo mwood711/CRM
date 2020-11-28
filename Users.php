@@ -1,4 +1,24 @@
-   <!DOCTYPE html>
+  <?php 
+
+    session_start();
+    $id = $_SESSION['id'];
+     require('dbconfig.php');
+     $sql = "SELECT role FROM Login where id = '".$id."'";
+     $stmt = sqlsrv_query( $conn, $sql );
+     if( $stmt === false) {
+     die( print_r( sqlsrv_errors(), true) );
+     }
+     while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+        
+        $role = $row['role'];
+     }
+     sqlsrv_free_stmt( $stmt);
+    if ($role != 'admin')
+    {
+        header('location:login2.php');
+    }
+?>
+  <!DOCTYPE html>
    <html lang="en">
    <head>
    <meta charset="utf-8">
@@ -40,14 +60,7 @@
    <!-- End Theme Layout Style
    =====================================================================-->
 
-   <?php 
 
-    session_start();
-    if ($_SESSION['role'] != 'user' && $_SESSION['role'] != 'admin')
-    {
-        header('location:login2.php');
-    }
-?>
    </head>
    <body class="hold-transition sidebar-mini">
   
@@ -63,8 +76,8 @@
    <i class="fa fa-users"></i>
    </div>
    <div class="header-title">
-   <h1>Contacts</h1>
-   <small>Contact List</small>
+   <h1>Users</h1>
+   <small>User List</small>
    </div>
    </section>
    <!-- Main content -->
@@ -80,7 +93,7 @@
    <!-- Plugin content:powerpoint,txt,pdf,png,word,xl -->
    <div class="btn-group d-flex" role="group">
    <div class="buttonexport" id="buttonlist"> 
-   <a class="btn btn-add" href="addclient"> <i class="fa fa-plus"></i> Add Contact
+   <a class="btn btn-add" href="register.php"> <i class="fa fa-plus"></i> Add User
    </a>  
    </div>
    </div> 
@@ -93,7 +106,7 @@
    <img src="assets/dist/img/excel.png" width="24" alt="logo"> Excel</a>
    </li>
    <li>
-      <a href="PDF-generate/generate-contact-pdf.php" > 
+      <a href="PDF-generate/generate-users-pdf.php" > 
       <img src="assets/dist/img/pdf.png" width="24" alt="logo"> PDF</a>
    </li>
    </ul>
@@ -103,11 +116,9 @@
    <table id="dataTableExample1" class="table table-bordered table-striped table-hover">
    <thead class="back_table_color">
    <tr class="info">
-   <th>First Name</th>
-   <th>Last Name</th>
-   <th>Title</th>
-   <th>Phone</th>
-   <th>Email</th>
+   <th>Username</th>
+   <th>Role</th>
+   <th></th>
    <th></th>
    <th></th>
    </tr>
@@ -115,21 +126,18 @@
    <tbody>
    <?php
          require('dbconfig.php');
-         $sql = "SELECT contact_id, fname, lname, title, info, phone, email, address,
-         city, state, zip FROM contact";
+         $sql = "SELECT id, username, role FROM Login";
          $stmt = sqlsrv_query( $conn, $sql );
          if( $stmt === false) {
          die( print_r( sqlsrv_errors(), true) );
          }
          while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
-         echo "<tr onclick=\"window.location='ClientDetails?custid=".$row["contact_id"]."'\">
-         <td>".$row['fname']."</td>
-         <td>".$row['lname']."</td>
-         <td>".$row['title']."</td>
-         <td>".$row['phone']."</td>
-         <td>".$row['email']."</td>
-         <td align='center'><a href=\"editContact.php?contact_id=".$row['contact_id']."\" style='color:blue'>Update</a></td>
-         <td align='center'><a href=\"deleteclient.php?contact_id=".$row['contact_id']."\" style='color:red'>Delete</a></td>
+         echo "<tr>
+         <td>".$row['username']."</td>
+         <td>".$row['role']."</td>
+         <td align='center'><a href=\"editUser.php?id=".$row['id']."\" style='color:blue'>Update</a></td>
+         <td align='center'><a href=\"resetPassword.php?id=".$row['id']."\" style='color:green'>Reset Password</a></td>
+         <td align='center'><a href=\"deleteUserQuery.php?id=".$row['id']."\" style='color:red'>Delete</a></td>
          </tr>";
          }
          sqlsrv_free_stmt( $stmt);
@@ -141,97 +149,7 @@
    </div>
    </div>
    </div>
-   <!-- customer Modal1 -->
-   <div class="modal fade" id="customer1" tabindex="-1" role="dialog" aria-hidden="true">
-   <div class="modal-dialog">
-   <div class="modal-content">
-   <div class="modal-header modal-header-primary">
-   <h3><i class="fa fa-user m-r-5"></i> Update Customer</h3>
-   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-   </div>
-   <div class="modal-body">
-   <div class="row">
-   <div class="col-md-12">
-   <form class="form-horizontal">
-   <div class="row">
-   <!-- Text input-->
-   <div class="col-md-4 form-group">
-   <label class="control-label">Customer Name:</label>
-   <input type="text" placeholder="Customer Name" class="form-control">
-   </div>
-   <!-- Text input-->
-   <div class="col-md-4 form-group">
-   <label class="control-label">Email:</label>
-   <input type="email" placeholder="Email" class="form-control">
-   </div>
-   <!-- Text input-->
-   <div class="col-md-4 form-group">
-   <label class="control-label">Mobile</label>
-   <input type="number" placeholder="Mobile" class="form-control">
-   </div>
-   <div class="col-md-6 form-group">
-   <label class="control-label">Address</label><br>
-   <textarea name="address" rows="3"></textarea>
-   </div>
-   <div class="col-md-6 form-group">
-   <label class="control-label">type</label>
-   <input type="text" placeholder="type" class="form-control">
-   </div>
-   <div class="col-md-12 form-group user-form-group">
-   <div class="float-right">
-   <button type="button" class="btn btn-danger btn-sm">Cancel</button>
-   <button type="submit" class="btn btn-add btn-sm">Save</button>
-   </div>
-   </div>
-   </div>
-   </form>
-   </div>
-   </div>
-   </div>
-   <div class="modal-footer">
-   <button type="button" class="btn btn-danger float-left" data-dismiss="modal">Close</button>
-   </div>
-   </div>
-   <!-- /.modal-content -->
-   </div>
-   <!-- /.modal-dialog -->
-   </div>
-   <!-- /.modal -->
-   <!-- Modal -->    
-   <!-- Customer Modal2 -->
-   <div class="modal fade" id="customer2" tabindex="-1" role="dialog" aria-hidden="true">
-   <div class="modal-dialog">
-   <div class="modal-content">
-   <div class="modal-header modal-header-primary">
-   <h3><i class="fa fa-user m-r-5"></i> Delete Customer</h3>
-   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-   </div>
-   <div class="modal-body">
-   <div class="row">
-   <div class="col-md-12">
-   <form class="form-horizontal">
-   <div class="row">
-   <div class="col-md-12 form-group user-form-group">
-   <label class="control-label">Delete Customer</label>
-   <div class="float-right">
-   <button type="button" class="btn btn-danger btn-sm">NO</button>
-   <button type="submit" class="btn btn-add btn-sm">YES</button>
-   </div>
-   </div>
-   </div>
-   </form>
-   </div>
-   </div>
-   </div>
-   <div class="modal-footer">
-   <button type="button" class="btn btn-danger float-left" data-dismiss="modal">Close</button>
-   </div>
-   </div>
-   <!-- /.modal-content -->
-   </div>
-   <!-- /.modal-dialog -->
-   </div>
-   <!-- /.modal -->
+ 
    </section>
    <!-- /.content -->
    </div>
@@ -240,17 +158,9 @@
    <table id="excelTable" style="visibility:hidden">
      <thead>
      <tr>
-     <th>First Name</th>
-     <th>Last Name</th>
-     <th>Company</th>
-     <th>Title</th>
-     <th>Info</th>
-     <th>Email</th>
-     <th>Phone</th>
-     <th>Address</th>
-     <th>City</th>
-     <th>State</th>
-     <th>Zip</th>
+     <th>Username</th>
+     <th>Role</th>
+ 
      </tr>
      </thead>
      <tbody>
@@ -258,8 +168,8 @@
              require('dbconfig.php');
 
 
-             $sql = "SELECT * 
-                FROM contact INNER JOIN company ON contact.company_id = company.company_id";
+             $sql = "SELECT username, role 
+                FROM Login";
              $stmt = sqlsrv_query( $conn, $sql );
              if( $stmt === false) {
              die( print_r( sqlsrv_errors(), true) );
@@ -267,17 +177,9 @@
 
              while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
              echo "<tr>
-                     <td>".$row['fname']."</td>
-                     <td>".$row['lname']."</td>
-                     <td>".$row['company_name']."</td>
-                     <td>".$row['title']."</td>
-                     <td>".$row['info']."</td>
-                     <td>".$row['email']."</td>
-                     <td>".$row['phone']."</td>
-                     <td>".$row['address']."</td>
-                     <td>".$row['city']."</td>
-                     <td>".$row['state']."</td>
-                     <td>".$row['zip']."</td>
+                     <td>".$row['username']."</td>
+                     <td>".$row['role']."</td>
+                   
                      </tr>" ;
              }
              sqlsrv_free_stmt( $stmt);
@@ -347,4 +249,3 @@
         </script>
    </body>
    </html>
-

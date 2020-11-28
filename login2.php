@@ -71,7 +71,7 @@
             {
             
                 session_start();
-                $_SESSION['role']=$row['role'];
+                $_SESSION['id']=$row['id'];
                 header('location:index.php');
 
             }
