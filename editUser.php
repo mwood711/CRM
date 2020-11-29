@@ -1,3 +1,23 @@
+  <?php 
+
+    session_start();
+    $id = $_SESSION['id'];
+     require('dbconfig.php');
+     $sql = "SELECT role FROM Login where id = '".$id."'";
+     $stmt = sqlsrv_query( $conn, $sql );
+     if( $stmt === false) {
+     die( print_r( sqlsrv_errors(), true) );
+     }
+     while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+        
+        $role = $row['role'];
+     }
+     sqlsrv_free_stmt( $stmt);
+    if ($role != 'admin')
+    {
+        header('location:login2.php');
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,14 +58,7 @@
 <link href="assets/plugins/emojionearea/emojionearea.min.css" rel="stylesheet" />
 <!-- Monthly css -->
 <link href="assets/plugins/monthly/monthly.css" rel="stylesheet" />
-<?php 
 
-    session_start();
-    if ($_SESSION['role'] != 'admin')
-    {
-        header('location:login2.php');
-    }
-?>
 <!-- End page Label Plugins 
 =====================================================================-->
 <!-- Start Theme Layout Style
@@ -60,13 +73,13 @@
 <?php
           require('dbconfig.php');
 
-          $id =$_REQUEST['id'];
-          $sql = "SELECT * FROM Login where id='".$id."'"; 
+          $user_id =$_REQUEST['id'];
+          $sql = "SELECT * FROM Login where id='".$user_id."'"; 
           $stmt = sqlsrv_query($conn, $sql );
           while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ){
           
             $username = $row['username'];
-            $role = $row['role'];
+            $user_role = $row['role'];
           }
 
 ?>
@@ -122,13 +135,13 @@
      <?php
           
 
-            if ($role === 'admin'){
-              echo "<option selected value='".$role."'>".$role."</option>
+            if ($user_role === 'admin'){
+              echo "<option selected value='".$user_role."'>".$user_role."</option>
                     <option value='user'>user</option>
               ";
             }
             else{
-              echo "<option selected value='".$role."'>".$role."</option>
+              echo "<option selected value='".$user_role."'>".$user_role."</option>
                     <option value='admin'>admin</option>
               ";
 
@@ -138,7 +151,7 @@
       ?>
   </select>
 </div>
-<input type="hidden" name="id" value="<?php echo $id ?>"/>
+<input type="hidden" name="id" value="<?php echo $user_id ?>"/>
 <div class="submit-button">                           
 <a> <input class="btn btn-success" type="submit" name="submit" value="Edit"></a>
 </div>

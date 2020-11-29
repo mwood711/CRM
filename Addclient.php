@@ -1,3 +1,23 @@
+  <?php 
+
+    session_start();
+    $id = $_SESSION['id'];
+     require('dbconfig.php');
+     $sql = "SELECT role FROM Login where id = '".$id."'";
+     $stmt = sqlsrv_query( $conn, $sql );
+     if( $stmt === false) {
+     die( print_r( sqlsrv_errors(), true) );
+     }
+     while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+        
+        $role = $row['role'];
+     }
+     sqlsrv_free_stmt( $stmt);
+    if ($role != 'user' && $role != 'admin')
+    {
+        header('location:login2.php');
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -145,15 +165,22 @@
     if( $stmt === false) {
     die( print_r( sqlsrv_errors(), true) );
     }
-    while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+    $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC);
+    $x = 1;
 
-        $id = $row['contact_id'] + 1;
+    if (empty($row)){
 
-    }
+      $contact_id = 1;      
+
+    } 
+      while($x < 2) {
+
+            $contact_id = $row['contact_id'] + 1;
+            ++$x;
+      }
     sqlsrv_free_stmt( $stmt);
-
  ?>
-<input type="hidden" name="id" value="<?php echo $id ?>"/>
+<input type="hidden" name="id" value="<?php echo $contact_id ?>"/>
 <div class="submit-button">                           
 <a> <input class="btn btn-success" type="submit" name="submit" value="Add"></a>
 </div>

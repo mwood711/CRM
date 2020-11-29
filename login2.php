@@ -124,7 +124,6 @@
         <div>
         	<center>
            <button class="btn green_btn" type="submit" name="login">Login</button>
-           <a class="btn btn-warning" href="register.html">Register</a>
        		</center>
         </div>
         

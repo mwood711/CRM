@@ -1,3 +1,24 @@
+  <?php 
+
+    session_start();
+    $id = $_SESSION['id'];
+     require('dbconfig.php');
+     $sql = "SELECT role FROM Login where id = '".$id."'";
+     $stmt = sqlsrv_query( $conn, $sql );
+     if( $stmt === false) {
+     die( print_r( sqlsrv_errors(), true) );
+     }
+     while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+        
+        $role = $row['role'];
+     }
+     sqlsrv_free_stmt( $stmt);
+    if ($role != 'user' && $role != 'admin')
+    {
+        header('location:login2.php');
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,14 +60,7 @@
 <!--<link href="assets/dist/css/stylecrm-rtl.css" rel="stylesheet" />-->
 <!-- End Theme Layout Style
 =====================================================================-->
-<?php 
 
-    session_start();
-    if ($_SESSION['role'] != 'user' && $_SESSION['role'] != 'admin')
-    {
-        header('location:login2.php');
-    }
-?>
 </head>
 <body class="hold-transition sidebar-mini">
 <?php 
@@ -246,11 +260,19 @@
     if( $stmt === false) {
     die( print_r( sqlsrv_errors(), true) );
     }
-    while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+    $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC);
+    $x = 1;
 
-        $id = $row['event_id'] + 1;
+    if (empty($row)){
 
-    }
+      $id = 1;      
+
+    } 
+      while($x < 2) {
+
+            $id = $row['event_id'] + 1;
+            ++$x;
+      }
     sqlsrv_free_stmt( $stmt);
 
  ?>
@@ -303,11 +325,19 @@
     if( $stmt === false) {
     die( print_r( sqlsrv_errors(), true) );
     }
-    while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+    $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC);
+    $x = 1;
 
-        $id = $row['event_type_id'] + 1;
+    if (empty($row)){
 
-    }
+      $id = 1;      
+
+    } 
+      while($x < 2) {
+
+            $id = $row['event_type_id'] + 1;
+            ++$x;
+      }
     sqlsrv_free_stmt( $stmt);
 
  ?>

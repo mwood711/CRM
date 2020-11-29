@@ -1,3 +1,24 @@
+  <?php 
+
+    session_start();
+    $id = $_SESSION['id'];
+     require('dbconfig.php');
+     $sql = "SELECT role FROM Login where id = '".$id."'";
+     $stmt = sqlsrv_query( $conn, $sql );
+     if( $stmt === false) {
+     die( print_r( sqlsrv_errors(), true) );
+     }
+     while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+        
+        $role = $row['role'];
+     }
+     sqlsrv_free_stmt( $stmt);
+    if ($role != 'admin')
+    {
+        header('location:login2.php');
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,14 +59,7 @@
 <link href="assets/plugins/emojionearea/emojionearea.min.css" rel="stylesheet" />
 <!-- Monthly css -->
 <link href="assets/plugins/monthly/monthly.css" rel="stylesheet" />
-<?php 
 
-    session_start();
-    if ($_SESSION['role'] != 'admin')
-    {
-        header('location:login2.php');
-    }
-?>
 <!-- End page Label Plugins 
 =====================================================================-->
 <!-- Start Theme Layout Style
@@ -60,8 +74,8 @@
 <?php
           require('dbconfig.php');
 
-          $id =$_REQUEST['id'];
-          $sql = "SELECT username, id FROM Login where id='".$id."'"; 
+          $user_id =$_REQUEST['id'];
+          $sql = "SELECT username, id FROM Login where id='".$user_id."'"; 
           $stmt = sqlsrv_query($conn, $sql );
           while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ){
           
@@ -115,7 +129,7 @@
 <label>Password</label>
 <input type="Password" class="form-control" placeholder="Enter Password" name="password" require>
 </div>
-<input type="hidden" name="id" value="<?php echo $id ?>"/>
+<input type="hidden" name="id" value="<?php echo $user_id ?>"/>
 <div class="submit-button">                           
 <a> <input class="btn btn-success" type="submit" name="submit" value="Reset"></a>
 </div>

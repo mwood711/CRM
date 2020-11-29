@@ -255,7 +255,7 @@
          $date = $row['date'];
          $stringdate = $date->format('m-d-y');
         echo 
-        "<tr>
+        "<tr onclick=\"window.location='eventsDetails?event_id=".$row["event_id"]."'\">
         <td>".$row['description']."</td>
         <td>".$stringdate."</td>
         </tr>" ; 
@@ -281,7 +281,7 @@
 </div>
 <div class="card-body">
 <div style="width:100%;">   
-<div id="chart" style="width: 100%; height: 400px;">
+<div id="chart" style="width: 100%; height: 270px;">
 
 <table class="table table-hover">
 <thead class="border_border">
@@ -308,7 +308,7 @@
         $date = $row['contactDate'];
         $stringdate = $date->format('m-d-y');
         echo 
-        "<tr>
+        "<tr onclick=\"window.location='contactLogDetails.php?id=".$row["id"]."'\">
         <td>".$row['fname']." ". $row['lname'] ."</td>
         <td>".$stringdate."</td>
         </tr>" ; 

@@ -1,15 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-   <head>
-
-    <?php 
+  <?php 
 
     session_start();
-    if ($_SESSION['role'] != 'user' && $_SESSION['role'] != 'admin')
+    $id = $_SESSION['id'];
+     require('dbconfig.php');
+     $sql = "SELECT role FROM Login where id = '".$id."'";
+     $stmt = sqlsrv_query( $conn, $sql );
+     if( $stmt === false) {
+     die( print_r( sqlsrv_errors(), true) );
+     }
+     while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+        
+        $role = $row['role'];
+     }
+     sqlsrv_free_stmt( $stmt);
+    if ($role != 'user' && $role != 'admin')
     {
         header('location:login2.php');
     }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+   <head>
 
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">

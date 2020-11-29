@@ -1,6 +1,7 @@
 <?php 
 
-$contact_id = $_POST['id'];
+
+$contact_id = $_POST['contact_id'];
 $fname = $_POST['fname'];
 $lname = $_POST['lname'];
 $title = $_POST['title'];
@@ -13,10 +14,12 @@ $state = $_POST['state'];
 $zip = $_POST['zip'];
 $company_id = $_POST['company_id'];
 
+echo $contact_id;
+
 
 
 require_once 'dbconfig.php';
-$sql = "update contact set fname='".$fname."', lname='".$lname."', title='".$title."', info='".$info."', phone='".$phone."', email='".$email."', address='".$address."', city='".$city."', state='".$state."', zip='".$zip."', company_id='".$company_id."' where contact_id='".$contact_id."'";
+$sql = "update Contact set fname='".$fname."', lname='".$lname."', title='".$title."', info='".$info."', phone='".$phone."', email='".$email."', address='".$address."', city='".$city."', state='".$state."', zip='".$zip."', company_id='".$company_id."' where contact_id='".$contact_id."'";
 
 $stmt = sqlsrv_query( $conn, $sql );
 if( $stmt === false) {

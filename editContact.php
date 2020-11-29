@@ -1,3 +1,24 @@
+  <?php 
+
+    session_start();
+    $id = $_SESSION['id'];
+     require('dbconfig.php');
+     $sql = "SELECT role FROM Login where id = '".$id."'";
+     $stmt = sqlsrv_query( $conn, $sql );
+     if( $stmt === false) {
+     die( print_r( sqlsrv_errors(), true) );
+     }
+     while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+        
+        $role = $row['role'];
+     }
+     sqlsrv_free_stmt( $stmt);
+    if ($role != 'user' && $role != 'admin')
+    {
+        header('location:login2.php');
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,8 +71,8 @@
 <?php
           require('dbconfig.php');
 
-          $id =$_REQUEST['contact_id'];
-          $sql = "SELECT * FROM contact where contact_id='".$id."'"; 
+          $contact_id =$_REQUEST['contact_id'];
+          $sql = "SELECT * FROM contact where contact_id='".$contact_id."'"; 
           $stmt = sqlsrv_query($conn, $sql );
           while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ){
           
@@ -147,7 +168,7 @@
 </div>
 <div class="form-group">
 <label>Company Info</label>
-<select class="form-control" name="company_id" id="inputGroupSelect">
+<select class="form-control" name="company_id" >
 
      <?php
           require('dbconfig.php');
@@ -155,7 +176,7 @@
           $stmt = sqlsrv_query($conn, $sql );
           while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ){
 
-            if ($company_id === $row['company_id']){
+            if ($company_id == $row['company_id']){
               echo "<option selected value='".$row['company_id']."'>".$row['company_name']."</option>";
             }
             else{
@@ -168,7 +189,7 @@
   </select>
 </div>
 
-<input type="hidden" name="id" value="<?php echo $id ?>"/>
+<input type="hidden" name="contact_id" value="<?php echo $contact_id ?>"/>
 <div class="submit-button">                           
 <a> <input class="btn btn-success" type="submit" name="submit" value="Edit"></a>
 </div>

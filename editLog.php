@@ -1,3 +1,24 @@
+  <?php 
+
+    session_start();
+    $id = $_SESSION['id'];
+     require('dbconfig.php');
+     $sql = "SELECT role FROM Login where id = '".$id."'";
+     $stmt = sqlsrv_query( $conn, $sql );
+     if( $stmt === false) {
+     die( print_r( sqlsrv_errors(), true) );
+     }
+     while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+        
+        $role = $row['role'];
+     }
+     sqlsrv_free_stmt( $stmt);
+    if ($role != 'user' && $role != 'admin')
+    {
+        header('location:login2.php');
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,8 +73,8 @@
 <?php
           require('dbconfig.php');
 
-          $id =$_REQUEST['id'];
-          $sql = "SELECT top 1 * FROM ContactLog inner join Contact on ContactLog.contact_id = Contact.contact_id where id='".$id."' "; 
+          $log_id =$_REQUEST['id'];
+          $sql = "SELECT top 1 * FROM ContactLog inner join Contact on ContactLog.contact_id = Contact.contact_id where id='".$log_id."' "; 
           $stmt = sqlsrv_query($conn, $sql );
           while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ){
 
@@ -140,7 +161,7 @@
 <label>Description</label>
 <textarea class="form-control" name="description" placeholder="Enter Contact Description" required><?php echo $description; ?></textarea>
 </div>
-<input type="hidden" name="id" value="<?php echo $id ?>"/>
+<input type="hidden" name="id" value="<?php echo $log_id ?>"/>
 <div class="submit-button">                           
 <a> <input class="btn btn-success ml-3 mt-3" type="submit" name="submit" value="Edit"></a>
 </div>

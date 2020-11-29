@@ -1,3 +1,24 @@
+  <?php 
+
+    session_start();
+    $id = $_SESSION['id'];
+     require('dbconfig.php');
+     $sql = "SELECT role FROM Login where id = '".$id."'";
+     $stmt = sqlsrv_query( $conn, $sql );
+     if( $stmt === false) {
+     die( print_r( sqlsrv_errors(), true) );
+     }
+     while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+        
+        $role = $row['role'];
+     }
+     sqlsrv_free_stmt( $stmt);
+    if ($role != 'user' && $role != 'admin')
+    {
+        header('location:login2.php');
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,8 +71,8 @@
 <?php
           require('dbconfig.php');
 
-          $id =$_REQUEST['faculty_id'];
-          $sql = "SELECT * FROM faculty where faculty_id='".$id."'"; 
+          $faculty_id =$_REQUEST['faculty_id'];
+          $sql = "SELECT * FROM faculty where faculty_id='".$faculty_id."'"; 
           $stmt = sqlsrv_query($conn, $sql );
           while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ){
           
@@ -121,7 +142,7 @@
 <input type="text" class="form-control" value="<?php echo $address ?>" name="address" placeholder="Enter Street Address" required>
 </div>
 
-<input type="hidden" name="id" value="<?php echo $id ?>"/>
+<input type="hidden" name="id" value="<?php echo $faculty_id ?>"/>
 <div class="submit-button">                           
 <a> <input class="btn btn-success" type="submit" name="submit" value="Edit"></a>
 </div>

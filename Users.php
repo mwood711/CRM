@@ -103,11 +103,11 @@
    <li class="dropdown-divider"></li>
    <li>
    <a href="#" onclick="$('#excelTable').tableExport({type:'excel',escape:'false'});"> 
-   <img src="assets/dist/img/excel.png" width="24" alt="logo"> Excel</a>
+   <img src="../assets/dist/img/excel.png" width="24" alt="logo"> Excel</a>
    </li>
    <li>
-      <a href="PDF-generate/generate-users-pdf.php" > 
-      <img src="assets/dist/img/pdf.png" width="24" alt="logo"> PDF</a>
+      <a href="../PDF-generate/generate-users-pdf.php" > 
+      <img src="../assets/dist/img/pdf.png" width="24" alt="logo"> PDF</a>
    </li>
    </ul>
    </div>
@@ -188,11 +188,7 @@
      
    </table>
 
-   <!-- footer -->
-   <?php 
-        include 'assets/php/footer.php';
-   ?>
-   </div>
+ 
    <!-- ./wrapper -->
    <!-- Start Core Plugins
    =====================================================================-->
@@ -246,6 +242,6 @@
             });
           });
         });
-        </script>
+  </script>
    </body>
    </html>
